@@ -1,25 +1,28 @@
-" Start the status line
-set statusline=%#StatusLineNC#\ %f\ %#ErrorMsg#%m%r%h%#StatusLineNC#
+if janus#is_plugin_enabled('powerline')
 
-" Add fugitive if enabled
-if janus#is_plugin_enabled('fugitive')
-  set statusline+=%#ErrorMsg#%{fugitive#statusline()}%#StatusLine#
+else
+  " Start the status line
+  set statusline=%#StatusLineNC#\ %f\ %#ErrorMsg#%m%r%h%#StatusLineNC#
+
+  " Add fugitive if enabled
+  if janus#is_plugin_enabled('fugitive')
+    set statusline+=%#ErrorMsg#%{fugitive#statusline()}%#StatusLine#
+  endif
+
+  " Add syntastic if enabled
+  if janus#is_plugin_enabled('syntastic')
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+  endif
+
+  " Finish the statusline
+  set statusline+=%=      "left/right separator
+  "set statusline+=Line:%l/%L[%p%%]
+  "set statusline+=Col:%v
+  set statusline+=%#StatusLineNC#Buf:#%n%#StatusLine#
+  "set statusline+=[%b][0x%B]
+  set statusline+=\ %c,     "cursor column
+  set statusline+=%l/%L   "cursor line/total lines
+  set statusline+=\ %p%%    "percent through file
 endif
-
-" Add syntastic if enabled
-if janus#is_plugin_enabled('syntastic')
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-endif
-
-" Finish the statusline
-set statusline+=%=      "left/right separator
-"set statusline+=Line:%l/%L[%p%%]
-"set statusline+=Col:%v
-set statusline+=%#StatusLineNC#Buf:#%n%#StatusLine#
-"set statusline+=[%b][0x%B]
-set statusline+=\ %c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %p%%    "percent through file
-

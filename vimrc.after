@@ -160,11 +160,8 @@ set foldtext=MyFoldText()
 " }}}
 
 
-if janus#is_plugin_enabled('powerline') && filereadable(expand("~/.vimsettings/statusline"))
-  source ~/.vimsettings/statusline
-endif
 
-" Scratch {{{
+" Scratch ------------------------------------------------------------------{{{
 command! ScratchToggle call ScratchToggle()
 
 function! ScratchToggle() " {{{
@@ -175,7 +172,12 @@ function! ScratchToggle() " {{{
     exec "normal! :Sscratch\<cr>\<C-W>J:resize 13\<cr>"
     let w:is_scratch_window = 1
   endif
-endfunction " }}}
+endfunction
 
 nnoremap <silent> <leader><tab> :ScratchToggle<cr>
 " }}}
+
+"
+if filereadable(expand("~/.vim.settings/statusline"))
+  source ~/.vim.settings/statusline
+endif
