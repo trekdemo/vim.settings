@@ -5,7 +5,7 @@ task :link_vim_conf_files do
   %w[ vimrc.after vimrc.before gvimrc.after gvimrc.before ].each do |file|
     dest = File.expand_path("~/.#{file}")
     unless File.exist?(dest)
-      FileUtils.ln_sf(File.expand_path("../.vim.settings/#{file}", __FILE__), dest)
+      FileUtils.ln_sf(File.expand_path("../#{file}", __FILE__), dest)
     end
   end
 end
