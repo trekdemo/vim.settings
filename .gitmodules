@@ -1,0 +1,39 @@
+[submodule "vim-git-branch-info"]
+	path = vimbundles/vim-git-branch-info
+	url = git://github.com/taq/vim-git-branch-info.git
+[submodule "vimbundles/vim-easymotion"]
+	path = vimbundles/vim-easymotion
+	url = git://github.com/Lokaltog/vim-easymotion.git
+[submodule "vimbundles/vim-matchit"]
+	path = vimbundles/vim-matchit
+	url = git://github.com/edsono/vim-matchit.git
+[submodule "vimbundles/vim-bundler"]
+	path = vimbundles/vim-bundler
+	url = git://github.com/tpope/vim-bundler.git
+[submodule "vimbundles/vim-peepopen"]
+	path = vimbundles/vim-peepopen
+	url = git://github.com/shemerey/vim-peepopen.git
+[submodule "vimbundles/dbext"]
+	path = vimbundles/dbext
+	url = git://github.com/vim-scripts/dbext.vim.git
+[submodule "vimbundles/csv"]
+	path = vimbundles/csv
+	url = git://github.com/vim-scripts/csv.vim.git
+[submodule "vimbundles/ctrlp.vim"]
+	path = vimbundles/ctrlp.vim
+	url = git://github.com/kien/ctrlp.vim.git
+[submodule "vimbundles/vim-css-color"]
+	path = vimbundles/vim-css-color
+	url = git://github.com/bjeanes/vim-css-color
+[submodule "vimbundles/vim-ruby-debugger"]
+	path = vimbundles/vim-ruby-debugger
+	url = git://github.com/astashov/vim-ruby-debugger
+[submodule "vimbundles/vim-autoclose"]
+	path = vimbundles/vim-autoclose
+	url = git://github.com/Townk/vim-autoclose
+[submodule "vimbundles/vim-powerline"]
+	path = vimbundles/vim-powerline
+	url = git://github.com/Lokaltog/vim-powerline.git
+[submodule "vimbundles/scratch.vim"]
+	path = vimbundles/scratch.vim
+	url = git://github.com/vim-scripts/scratch.vim.git

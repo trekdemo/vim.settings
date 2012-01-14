@@ -1,0 +1,17 @@
+let mapleader=","
+
+" Disable vim plugins
+" call janus#disable_plugin('csv')
+" call janus#disable_plugin('ctrlp.vim')
+" call janus#disable_plugin('dbext')
+" call janus#disable_plugin('molokai_mod')
+" call janus#disable_plugin('vim-autoclose')
+" call janus#disable_plugin('vim-bundler')
+" call janus#disable_plugin('vim-css-color')
+" call janus#disable_plugin('vim-easymotion')
+" call janus#disable_plugin('vim-git-branch-info')
+" call janus#disable_plugin('vim-matchit')
+" call janus#disable_plugin('vim-ruby-debugger')
+call janus#disable_plugin('vim-peepopen')
+call janus#disable_plugin('command-t')
+

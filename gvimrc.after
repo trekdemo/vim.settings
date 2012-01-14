@@ -1,0 +1,27 @@
+" .gvimrc.after ( janus )
+" Author: Gergo Sulymosi <gergo.sulymosi@gmail.com>
+
+" set relativenumber
+"set guifont=Inconsolata:h14
+set guifont=Inconsolata-dz\ for\ Powerline:h12
+set linespace=1
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
+macmenu &File.New\ Tab key=<nop>
+" PeepOpen Plugin
+"map <D-t> <Plug>PeepOpen
+"imap <D-t> <Esc><Plug>PeepOpen
+
+" CtrlP plugin mac mapping
+map <D-t> :CtrlP<cr>
+imap <D-t> <Esc>:CtrlP<cr>
+
+
+set guioptions-=T     " Remove toolbar
+set guioptions+=LlRrb " Remove scrollbars
+set guioptions-=LlRrb
+
+set nohidden
+set lines=60 columns=180
+

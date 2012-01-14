@@ -1,0 +1,181 @@
+" .vimrc.after ( janus )
+" Author: Gergo Sulymosi <gergo.sulymosi@gmail.com>
+
+
+" Plugin settings --------------------------------------------------------- {{{
+  let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+  let g:ruby_debugger_progname = 'mvim'
+
+  " vim-css-color plugin
+  let g:cssColorVimDoNotMessMyUpdatetime = 1
+
+  " CtrlP root path markers
+  let g:ctrlp_root_markers = ['.rvmrc']
+  let g:ctrlp_working_path_mode = 2
+  let g:ctrlp_extensions = ['tag']
+  nnoremap <leader>. :CtrlPTag<cr>
+
+  " Turn on jshint errors by default
+  let g:JSLintHighlightErrorLine = 1
+  let g:Powerline_symbols = 'fancy'
+" }}}
+
+" Basic options ----------------------------------------------------------- {{{
+set nowrap
+set textwidth=79
+set colorcolumn=81
+set scrolloff=5
+set formatoptions=qrn1
+set clipboard+=unnamed  " Yanks go on clipboard instead.
+set novisualbell  " No blinking .
+set noerrorbells  " No noise.
+set foldenable
+set foldmethod=syntax
+set foldlevel=999999
+set foldlevelstart=2
+set lazyredraw
+set autoread
+set showbreak=↪
+set fillchars=diff:⣿
+"set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+set cursorline
+set nohidden
+set splitright
+set splitbelow
+set sidescroll=1
+set sidescrolloff=10
+set virtualedit+=block
+" }}}
+
+" Color scheme {{{
+syntax on
+set background=dark
+"colorscheme molokai
+colorscheme molokai_mod
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+" }}}
+
+
+" Mappings ---------------------------------------------------------------- {{{
+" Remove selected hightlight
+nnoremap <leader><space> :noh<cr>
+
+" Move in screen lines
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+
+inoremap <C-L> <space>=><space>
+inoremap <C-j> <Down>
+
+" Tab mappings.
+map <leader>tt :tabnew<cr>
+" map <leader>te :tabedit
+" Opens a tab edit command with the path of the currently edited file filled in
+" Normal mode: <Leader>t
+map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>tc :tabclose<cr>
+map <leader>to :tabonly<cr>
+map <leader>tn :tabnext<cr>
+map <leader>tp :tabprevious<cr>
+map <leader>tf :tabfirst<cr>
+map <leader>tl :tablast<cr>
+map <leader>tm :tabmove
+" nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+" nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
+nnoremap <leader>gx :!git dx<cr>
+nnoremap <leader>v V`]
+"nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+inoremap jj <ESC>
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Don't move on *
+nnoremap * *<c-o>
+" Same when jumping around
+nnoremap g; g;zz
+nnoremap g, g,zz
+" Easier to type, and I never use the default behavior.
+noremap H ^
+noremap L g_
+" }}}
+
+
+" Autocommands ------------------------------------------------------------ {{{
+" Strip tailing whitespace
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".") " Save last line
+    let c = col(".")  " Save last col
+    let _s=@/         " Save last search
+    %s/\s\+$//e       " Strip whitespaces
+    call cursor(l, c) " Restore cursor position
+    let @/=_s         " Restore last search
+endfun
+
+" Save when losing focus
+au FocusLost * silent! wall. silent!
+au Bufread,BufNewFile *.as set filetype=actionscript
+au BufRead,BufNewFile {Guardfile}    set ft=ruby
+au BufWritePre * :call <SID>StripTrailingWhitespaces()
+" }}}
+
+" Folding ----------------------------------------------------------------- {{{
+" Space to toggle folds.
+nnoremap <Space> za
+vnoremap <Space> za
+
+" Make zO recursively open whatever top level fold we're in, no matter where the
+" cursor happens to be.
+nnoremap zO zCzO
+
+" Use ,z to "focus" the current fold.
+nnoremap <leader>z zMzvzz
+
+function! MyFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+set foldtext=MyFoldText()
+" }}}
+
+
+if janus#is_plugin_enabled('powerline') && filereadable(expand("~/.vimsettings/statusline"))
+  source ~/.vimsettings/statusline
+endif
+
+" Scratch {{{
+command! ScratchToggle call ScratchToggle()
+
+function! ScratchToggle() " {{{
+  if exists("w:is_scratch_window")
+    unlet w:is_scratch_window
+    exec "q"
+  else
+    exec "normal! :Sscratch\<cr>\<C-W>J:resize 13\<cr>"
+    let w:is_scratch_window = 1
+  endif
+endfunction " }}}
+
+nnoremap <silent> <leader><tab> :ScratchToggle<cr>
+" }}}
