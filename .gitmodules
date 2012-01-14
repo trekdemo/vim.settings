@@ -37,3 +37,6 @@
 [submodule "vimbundles/scratch.vim"]
 	path = vimbundles/scratch.vim
 	url = git://github.com/vim-scripts/scratch.vim.git
+[submodule "vimbundles/vim-json"]
+	path = vimbundles/vim-json
+	url = https://github.com/leshill/vim-json.git
