@@ -1,7 +1,6 @@
 " .vimrc.after ( janus )
 " Author: Gergo Sulymosi <gergo.sulymosi@gmail.com>
 
-
 " Plugin settings --------------------------------------------------------- {{{
   let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
   let g:ruby_debugger_progname = 'mvim'
@@ -9,17 +8,18 @@
   " vim-css-color plugin
   let g:cssColorVimDoNotMessMyUpdatetime = 1
 
-  " CtrlP root path markers
-  let g:ctrlp_root_markers = ['.rvmrc']
-  let g:ctrlp_working_path_mode = 2
-  let g:ctrlp_extensions = ['tag']
-  nnoremap <leader>. :CtrlPTag<cr>
+  " Ctrl-P {{{
+    let g:ctrlp_root_markers = ['.rvmrc']
+    let g:ctrlp_working_path_mode = 2
+    let g:ctrlp_max_height = 20
+    let g:ctrlp_extensions = ['tag']
+
+    nnoremap <leader>. :CtrlPTag<cr>
+  " }}}
 
   " Turn on jshint errors by default
   let g:JSLintHighlightErrorLine = 1
-  let g:Powerline_symbols = 'fancy'
 " }}}
-
 " Basic options ----------------------------------------------------------- {{{
 set nowrap
 set textwidth=79
@@ -32,12 +32,12 @@ set noerrorbells  " No noise.
 set foldenable
 set foldmethod=syntax
 set foldlevel=999999
-set foldlevelstart=2
+set foldlevelstart=1
 set lazyredraw
 set autoread
 set showbreak=↪
 set fillchars=diff:⣿
-"set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+set listchars=tab:▸\ ,trail:.,eol:¬,extends:❯,precedes:❮
 set cursorline
 set nohidden
 set splitright
@@ -45,9 +45,10 @@ set splitbelow
 set sidescroll=1
 set sidescrolloff=10
 set virtualedit+=block
+" Better Completion
+set completeopt=longest,menuone,preview
 " }}}
-
-" Color scheme {{{
+" Color scheme ------------------------------------------------------------ {{{
 syntax on
 set background=dark
 "colorscheme molokai
@@ -56,8 +57,6 @@ colorscheme molokai_mod
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " }}}
-
-
 " Mappings ---------------------------------------------------------------- {{{
 " Remove selected hightlight
 nnoremap <leader><space> :noh<cr>
@@ -68,7 +67,7 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-inoremap <C-L> <space>=><space>
+inoremap <C-S-L> <space>=><space>
 inoremap <C-j> <Down>
 
 " Tab mappings.
@@ -109,8 +108,6 @@ nnoremap g, g,zz
 noremap H ^
 noremap L g_
 " }}}
-
-
 " Autocommands ------------------------------------------------------------ {{{
 " Strip tailing whitespace
 fun! <SID>StripTrailingWhitespaces()
@@ -123,12 +120,12 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 
 " Save when losing focus
-au FocusLost * silent! wall. silent!
+au FocusLost * :wa
 au Bufread,BufNewFile *.as set filetype=actionscript
 au BufRead,BufNewFile {Guardfile}    set ft=ruby
 au BufWritePre * :call <SID>StripTrailingWhitespaces()
+au VimResized * exe "normal! \<C-w>="
 " }}}
-
 " Folding ----------------------------------------------------------------- {{{
 " Space to toggle folds.
 nnoremap <Space> za
@@ -158,10 +155,7 @@ function! MyFoldText() " {{{
 endfunction " }}}
 set foldtext=MyFoldText()
 " }}}
-
-
-
-" Scratch ------------------------------------------------------------------{{{
+" Scratch ----------------------------------------------------------------- {{{
 command! ScratchToggle call ScratchToggle()
 
 function! ScratchToggle() " {{{
@@ -176,8 +170,125 @@ endfunction
 
 nnoremap <silent> <leader><tab> :ScratchToggle<cr>
 " }}}
+" }}}
+" Statusline -------------------------------------------------------------- {{{
 
-"
+let g:Powerline_symbols = 'fancy'
 if filereadable(expand("~/.vim.settings/statusline"))
   source ~/.vim.settings/statusline
 endif
+
+" }}}
+" Various filetype-specific stuff ----------------------------------------- {{{
+
+" Ruby {{{
+
+augroup ft_ruby
+    au!
+    au Filetype ruby setlocal foldmethod=syntax
+augroup END
+
+" }}}
+" Vim {{{
+
+augroup ft_vim
+    au!
+
+    au FileType vim setlocal foldmethod=marker
+    au FileType help setlocal textwidth=78
+    au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+augroup END
+
+" }}}
+" QuickFix {{{
+
+augroup ft_quickfix
+    au!
+    au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
+augroup END
+
+" }}}
+" CSS and LessCSS {{{
+
+augroup ft_css
+    au!
+
+    au BufNewFile,BufRead *.less setlocal filetype=less
+
+    au Filetype less,css setlocal foldmethod=marker
+    au Filetype less,css setlocal foldmarker={,}
+    au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
+    au Filetype less,css setlocal iskeyword+=-
+
+    " Use <leader>S to sort properties.  Turns this:
+    "
+    "     p {
+    "         width: 200px;
+    "         height: 100px;
+    "         background: red;
+    "
+    "         ...
+    "     }
+    "
+    " into this:
+
+    "     p {
+    "         background: red;
+    "         height: 100px;
+    "         width: 200px;
+    "
+    "         ...
+    "     }
+    au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+
+    " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+    " positioned inside of them AND the following code doesn't get unfolded.
+    au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+augroup END
+
+" }}}
+
+" }}}
+" Shell ------------------------------------------------------------------- {{{
+
+function! s:ExecuteInShell(command) " {{{
+    let command = join(map(split(a:command), 'expand(v:val)'))
+    let winnr = bufwinnr('^' . command . '$')
+    silent! execute  winnr < 0 ? 'botright vnew ' . fnameescape(command) : winnr . 'wincmd w'
+    setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap nonumber
+    echo 'Execute ' . command . '...'
+    silent! execute 'silent %!'. command
+    silent! redraw
+    silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+    silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>:AnsiEsc<CR>'
+    silent! execute 'nnoremap <silent> <buffer> q :q<CR>'
+    silent! execute 'AnsiEsc'
+    echo 'Shell command ' . command . ' executed.'
+endfunction " }}}
+command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+nnoremap <leader>! :Shell
+
+" }}}
+" Convenience mappings ---------------------------------------------------- {{{
+
+" Change case
+nnoremap <C-u> gUiw
+inoremap <C-u> <esc>gUiwea
+
+" Substitute
+nnoremap <leader>s :%s//<left>
+
+" Emacs bindings in command line mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+
+" Less chording
+nnoremap ; :
+
+" }}}
+" Insert Mode Completion -------------------------------------------------- {{{
+
+inoremap <c-l> <c-x><c-l>
+inoremap <c-f> <c-x><c-f>
+
+" }}}
