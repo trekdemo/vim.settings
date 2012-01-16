@@ -40,3 +40,6 @@
 [submodule "vimbundles/vim-json"]
 	path = vimbundles/vim-json
 	url = https://github.com/leshill/vim-json.git
+[submodule "vimbundles/vim-ragtag"]
+	path = vimbundles/vim-ragtag
+	url = https://github.com/tpope/vim-ragtag.git
