@@ -2,6 +2,7 @@
 " Author: Gergo Sulymosi <gergo.sulymosi@gmail.com>
 
 " Plugin settings --------------------------------------------------------- {{{
+  let g:Powerline_symbols = 'fancy'
   let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
   let g:ruby_debugger_progname = 'mvim'
 
@@ -13,6 +14,11 @@
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_max_height = 20
     let g:ctrlp_extensions = ['tag']
+    let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+      \ 'file': '\.exe$\|\.so$\|\.dll$',
+      \ 'link': 'some_bad_symbolic_link',
+    \ }
   " }}}
 
   " Turn on jshint errors by default
@@ -34,7 +40,8 @@ set foldlevelstart=1
 set lazyredraw
 set autoread
 set showbreak=↪
-set fillchars=diff:⣿
+set fillchars+=diff:⣿
+set fillchars+=vert:⣿
 set listchars=tab:▸\ ,trail:.,eol:¬,extends:❯,precedes:❮
 set cursorline
 set nohidden
@@ -43,8 +50,7 @@ set splitbelow
 set sidescroll=1
 set sidescrolloff=10
 set virtualedit+=block
-" Better Completion
-set completeopt=longest,menuone,preview
+set completeopt=longest,menuone,preview " Better Completion
 " }}}
 " Color scheme ------------------------------------------------------------ {{{
 syntax on
@@ -84,7 +90,8 @@ map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 " nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
-nnoremap <leader>gx :!git dx<cr>
+nnoremap <leader>gx :Git dx<cr>
+nnoremap <leader>gt :Git dt<cr>
 nnoremap <leader>v V`]
 "nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 inoremap jj <ESC>
@@ -119,11 +126,9 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 
 " Save when losing focus
-au FocusLost * :wa
 au Bufread,BufNewFile *.as set filetype=actionscript
 au BufRead,BufNewFile {Guardfile}    set ft=ruby
 au BufWritePre * :call <SID>StripTrailingWhitespaces()
-au VimResized * exe "normal! \<C-w>="
 " }}}
 " Folding ----------------------------------------------------------------- {{{
 " Space to toggle folds.
@@ -172,7 +177,6 @@ nnoremap <silent> <leader><tab> :ScratchToggle<cr>
 " }}}
 " Statusline -------------------------------------------------------------- {{{
 
-let g:Powerline_symbols = 'fancy'
 if filereadable(expand("~/.vim.settings/statusline"))
   source ~/.vim.settings/statusline
 endif
@@ -307,8 +311,9 @@ nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'
 " Quick editing ----------------------------------------------------------- {{{
 
 nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e ~/.vimrc.after<cr>
+nnoremap <leader>em <C-w>s<C-w>j<C-w>L:e ~/.gvimrc.after<cr>
 nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim.settings/snippets/<cr>
 nnoremap <leader>eg <C-w>s<C-w>j<C-w>L:e ~/.gitconfig<cr>
-nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>4j
+nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
 
 " }}}

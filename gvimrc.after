@@ -1,10 +1,11 @@
 " .gvimrc.after ( janus )
 " Author: Gergo Sulymosi <gergo.sulymosi@gmail.com>
 
-" set relativenumber
+"set relativenumber
 "set guifont=Inconsolata:h14
+"set guifont=Menlo\ for\ Powerline:h12
 set guifont=Inconsolata-dz\ for\ Powerline:h12
-"set linespace=0
+set linespace=1
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
