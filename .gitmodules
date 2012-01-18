@@ -43,3 +43,9 @@
 [submodule "vimbundles/vim-ragtag"]
 	path = vimbundles/vim-ragtag
 	url = https://github.com/tpope/vim-ragtag.git
+[submodule "vimbundles/threesome"]
+	path = vimbundles/threesome
+	url = https://github.com/sjl/threesome.vim.git
+[submodule "vimbundles/vim-align"]
+	path = vimbundles/vim-align
+	url = https://github.com/tsaleh/vim-align.git
