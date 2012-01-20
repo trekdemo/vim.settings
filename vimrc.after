@@ -26,6 +26,7 @@
 " }}}
 " Basic options ----------------------------------------------------------- {{{
 set nowrap
+set noswapfile                    " It's 2012, Vim.
 set textwidth=79
 set colorcolumn=81
 set scrolloff=5
@@ -65,6 +66,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Mappings ---------------------------------------------------------------- {{{
 " Remove selected hightlight
 nnoremap <leader><space> :noh<cr>
+nnoremap <cr> zvzz
 
 " Move in screen lines
 nnoremap j gj
@@ -77,6 +79,7 @@ inoremap <C-j> <Down>
 
 " Tab mappings.
 map <leader>tt :tabnew<cr>
+map <tab> %
 " map <leader>te :tabedit
 " Opens a tab edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>t

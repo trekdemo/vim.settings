@@ -49,3 +49,6 @@
 [submodule "vimbundles/vim-align"]
 	path = vimbundles/vim-align
 	url = https://github.com/tsaleh/vim-align.git
+[submodule "vimbundles/ri-browser"]
+	path = vimbundles/ri-browser
+	url = https://github.com/vim-scripts/ri-browser.git
