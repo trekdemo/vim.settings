@@ -1,29 +1,6 @@
 " .vimrc.after ( janus )
 " Author: Gergo Sulymosi <gergo.sulymosi@gmail.com>
 
-" Plugin settings --------------------------------------------------------- {{{
-  let g:Powerline_symbols = 'fancy'
-  let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-  let g:ruby_debugger_progname = 'mvim'
-
-  " vim-css-color plugin
-  let g:cssColorVimDoNotMessMyUpdatetime = 1
-
-  " Ctrl-P {{{
-    let g:ctrlp_root_markers = ['.rvmrc']
-    let g:ctrlp_working_path_mode = 2
-    let g:ctrlp_max_height = 20
-    let g:ctrlp_extensions = ['tag']
-    let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-      \ 'file': '\.exe$\|\.so$\|\.dll$',
-      \ 'link': 'some_bad_symbolic_link',
-    \ }
-  " }}}
-
-  " Turn on jshint errors by default
-  let g:JSLintHighlightErrorLine = 1
-" }}}
 " Basic options ----------------------------------------------------------- {{{
 set nowrap
 set noswapfile                    " It's 2012, Vim.
@@ -53,15 +30,65 @@ set sidescrolloff=10
 set virtualedit+=block
 set completeopt=longest,menuone,preview " Better Completion
 " }}}
-" Color scheme ------------------------------------------------------------ {{{
-syntax on
-set background=dark
-"colorscheme molokai
-"colorscheme molokai_mod
-colorscheme molokai_sjl
+" Plugin settings --------------------------------------------------------- {{{
 
-" Highlight VCS conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+  " Powerline {{{
+    let g:Powerline_symbols = 'fancy'
+  " }}}
+  " Taglist {{{
+    let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+  " }}}
+  " vim-css-color {{{
+    let g:cssColorVimDoNotMessMyUpdatetime = 1
+  " }}}
+  " Ctrl-P {{{
+    let g:ctrlp_root_markers = ['.rvmrc']
+    let g:ctrlp_working_path_mode = 2
+    let g:ctrlp_max_height = 20
+    let g:ctrlp_extensions = ['tag']
+    let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+      \ 'file': '\.exe$\|\.so$\|\.dll$',
+      \ 'link': 'some_bad_symbolic_link',
+    \ }
+  " }}}
+  " Bookmarking {{{
+    map <localleader>bb :ToggleBookmark<CR>
+    map <localleader>bn :NextBookmark<CR>
+    map <localleader>bp :PreviousBookmark<CR>
+    sign define bookmark text=⚑⚑
+    let g:bookmarking_menu = 1
+  " }}}
+  " Ruby-Debugger {{{
+    let g:ruby_debugger_progname = 'mvim'
+    map <localleader>b  :call g:RubyDebugger.toggle_breakpoint()<CR>
+    map <localleader>v  :call g:RubyDebugger.open_variables()<CR>
+    map <localleader>m  :call g:RubyDebugger.open_breakpoints()<CR>
+    map <localleader>t  :call g:RubyDebugger.open_frames()<CR>
+    map <localleader>s  :call g:RubyDebugger.step()<CR>
+    map <localleader>f  :call g:RubyDebugger.finish()<CR>
+    map <localleader>n  :call g:RubyDebugger.next()<CR>
+    map <localleader>c  :call g:RubyDebugger.continue()<CR>
+    map <localleader>e  :call g:RubyDebugger.exit()<CR>
+    map <localleader>d  :call g:RubyDebugger.remove_breakpoints()<CR>
+  " }}}
+  " JSHint {{{
+    let g:JSLintHighlightErrorLine = 1 " Turn on jshint errors by default
+  " }}}
+
+" }}}
+" Color scheme ------------------------------------------------------------ {{{
+
+  syntax on
+  set background=dark
+  "colorscheme molokai
+  "colorscheme molokai_mod
+  colorscheme molokai_sjl
+
+  " Highlight VCS conflict markers
+  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+  match ErrorMsg '\s\+$'
+
 " }}}
 " Mappings ---------------------------------------------------------------- {{{
 " Remove selected hightlight
@@ -103,6 +130,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+" Window resizing
+nnoremap <S-C-left> 5<c-w>>
+nnoremap <S-C-right> 5<c-w><
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
 nnoremap n nzzzv
@@ -315,8 +345,9 @@ nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'
 
 nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e ~/.vimrc.after<cr>
 nnoremap <leader>em <C-w>s<C-w>j<C-w>L:e ~/.gvimrc.after<cr>
-nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim.settings/snippets/<cr>
+nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/janus/vim/tools/snipmate-snippets<cr>
 nnoremap <leader>eg <C-w>s<C-w>j<C-w>L:e ~/.gitconfig<cr>
 nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
+nnoremap <leader>et <C-w>s<C-w>j<C-w>L:e ~/Dropbox/Tasks.qtask<cr>
 
 " }}}

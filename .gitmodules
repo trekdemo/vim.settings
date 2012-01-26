@@ -52,3 +52,12 @@
 [submodule "vimbundles/ri-browser"]
 	path = vimbundles/ri-browser
 	url = https://github.com/vim-scripts/ri-browser.git
+[submodule "vimbundles/vim-bookmarking"]
+	path = vimbundles/vim-bookmarking
+	url = https://github.com/dterei/VimBookmarking.git
+[submodule "vimbundles/quicktask"]
+	path = vimbundles/quicktask
+	url = https://github.com/aaronbieber/quicktask.git
+[submodule "vimbundles/vim-indent-guides"]
+	path = vimbundles/vim-indent-guides
+	url = https://github.com/nathanaelkane/vim-indent-guides.git

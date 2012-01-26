@@ -1,4 +1,5 @@
 let mapleader=","
+let localleader="\\"
 
 " Disable vim plugins
 " call janus#disable_plugin('csv')
