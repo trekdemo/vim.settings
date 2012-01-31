@@ -29,6 +29,7 @@ set sidescroll=1
 set sidescrolloff=10
 set virtualedit+=block
 set completeopt=longest,menuone,preview " Better Completion
+set diffopt+=iwhite                     " Ignore whitespace on diffs
 " }}}
 " Plugin settings --------------------------------------------------------- {{{
 
@@ -149,19 +150,50 @@ noremap L g_
 " }}}
 " Autocommands ------------------------------------------------------------ {{{
 " Strip tailing whitespace
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".") " Save last line
-    let c = col(".")  " Save last col
-    let _s=@/         " Save last search
-    %s/\s\+$//e       " Strip whitespaces
-    call cursor(l, c) " Restore cursor position
-    let @/=_s         " Restore last search
-endfun
 
-" Save when losing focus
-au Bufread,BufNewFile *.as set filetype=actionscript
-au BufRead,BufNewFile {Guardfile}    set ft=ruby
-au BufWritePre * :call <SID>StripTrailingWhitespaces()
+  au BufRead,BufNewFile *.as set filetype=actionscript
+  au BufRead,BufNewFile {Guardfile} set ft=ruby
+
+  " Striping whitespaces {{{
+    fun! <SID>StripTrailingWhitespaces()
+        let l = line(".") " Save last line
+        let c = col(".")  " Save last col
+        let _s=@/         " Save last search
+        %s/\s\+$//e       " Strip whitespaces
+        call cursor(l, c) " Restore cursor position
+        let @/=_s         " Restore last search
+    endfun
+    au BufWritePre * :call <SID>StripTrailingWhitespaces()
+   " }}}
+  if 0
+  " Toggle number and relativenumber {{{
+    " NumberToggle toggles between relative and absolute line numbers
+    function! NumberToggle()
+      if(&relativenumber == 1)
+        set number
+      else
+        set relativenumber
+      endif
+    endfunc
+
+    " Automatically switch to absolute numbers when focus is lost and switch back
+    " when the focus is regained.
+    :au FocusLost * :set number
+    :au FocusGained * :set relativenumber
+
+    " Switch to absolute line numbers when entering insert mode and switch back to
+    " relative line numbers when switching back to normal mode.
+    autocmd InsertEnter * :set number
+    autocmd InsertLeave * :set relativenumber
+
+    if exists('g:NumberToggleTrigger')
+      exec "nnoremap " . g:NumberToggleTrigger . " :call NumberToggle()<cr>"
+    else
+      nnoremap <C-n> :call NumberToggle()<cr>
+    endif
+   " }}}
+  endif
+
 " }}}
 " Folding ----------------------------------------------------------------- {{{
 " Space to toggle folds.
@@ -191,29 +223,6 @@ function! MyFoldText() " {{{
     return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
 endfunction " }}}
 set foldtext=MyFoldText()
-" }}}
-" Scratch ----------------------------------------------------------------- {{{
-command! ScratchToggle call ScratchToggle()
-
-function! ScratchToggle() " {{{
-  if exists("w:is_scratch_window")
-    unlet w:is_scratch_window
-    exec "q"
-  else
-    exec "normal! :Sscratch\<cr>\<C-W>J:resize 13\<cr>"
-    let w:is_scratch_window = 1
-  endif
-endfunction
-
-nnoremap <silent> <leader><tab> :ScratchToggle<cr>
-" }}}
-" }}}
-" Statusline -------------------------------------------------------------- {{{
-
-if filereadable(expand("~/.vim.settings/statusline"))
-  source ~/.vim.settings/statusline
-endif
-
 " }}}
 " Various filetype-specific stuff ----------------------------------------- {{{
 
@@ -284,6 +293,14 @@ augroup ft_css
 augroup END
 
 " }}}
+" PHP {{{
+
+augroup ft_php
+    au!
+    au Filetype php setlocal foldmethod=syntax
+augroup END
+
+" }}}
 
 " }}}
 " Shell ------------------------------------------------------------------- {{{
@@ -319,27 +336,12 @@ nnoremap <leader>s :%s//<left>
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
 
-" Less chording
-" nnoremap ; :
-
 " }}}
 " Insert Mode Completion -------------------------------------------------- {{{
 
 inoremap <c-l> <c-x><c-l>
 inoremap <c-f> <c-x><c-f>
 
-" }}}
-" Searching and movement -------------------------------------------------- {{{
-
-" Highlight word {{{
-
-nnoremap <silent> <leader>hh :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
-nnoremap <silent> <leader>h1 :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
-nnoremap <silent> <leader>h2 :execute '2match InterestingWord2 /\<<c-r><c-w>\>/'<cr>
-nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'<cr>
-
-" }}}
-"
 " }}}
 " Quick editing ----------------------------------------------------------- {{{
 
@@ -348,6 +350,5 @@ nnoremap <leader>em <C-w>s<C-w>j<C-w>L:e ~/.gvimrc.after<cr>
 nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/janus/vim/tools/snipmate-snippets<cr>
 nnoremap <leader>eg <C-w>s<C-w>j<C-w>L:e ~/.gitconfig<cr>
 nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
-nnoremap <leader>et <C-w>s<C-w>j<C-w>L:e ~/Dropbox/Tasks.qtask<cr>
 
 " }}}
