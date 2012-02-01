@@ -93,6 +93,9 @@ let maplocalleader = "\\"
 inoremap <c-l> <c-x><c-l>
 inoremap <c-f> <c-x><c-f>
 
+" Restart Pow
+map <silent> <leader>rp :!touch tmp/restart.txt<cr>
+
 " Change case
 nnoremap <C-u> gUiw
 inoremap <C-u> <esc>gUiwea
@@ -329,25 +332,7 @@ augroup ft_css
     au Filetype less,css,scss setlocal omnifunc=csscomplete#CompleteCSS
     au Filetype less,css,scss setlocal iskeyword+=-
 
-    " Use <leader>S to sort properties.  Turns this:
-    "
-    "     p {
-    "         width: 200px;
-    "         height: 100px;
-    "         background: red;
-    "
-    "         ...
-    "     }
-    "
-    " into this:
-
-    "     p {
-    "         background: red;
-    "         height: 100px;
-    "         width: 200px;
-    "
-    "         ...
-    "     }
+    " Use <leader>S to sort properties.
     au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
@@ -508,6 +493,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " Fugitive {{{
 
     nnoremap <leader>gd :Gdiff<cr>
+    nnoremap <leader>gp :Git push<cr>
     nnoremap <leader>gs :Gstatus<cr>
     nnoremap <leader>gw :Gwrite<cr>
     nnoremap <leader>ga :Gadd<cr>
