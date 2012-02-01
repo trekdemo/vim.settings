@@ -58,3 +58,6 @@
 [submodule "bundle/vim-rename2"]
 	path = bundle/vim-rename2
 	url = https://github.com/ReekenX/vim-rename2.git
+[submodule "bundle/vim-rails"]
+	path = bundle/vim-rails
+	url = https://github.com/tpope/vim-rails.git

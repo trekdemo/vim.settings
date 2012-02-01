@@ -177,6 +177,7 @@ map <Leader>= <C-w>=
 " Toggle NERDTree
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
+
 if has("gui_macvim") && has("gui_running")
   " Map command-[ and command-] to indenting or outdenting
   " while keeping the original selection in visual mode
@@ -530,11 +531,28 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     vnoremap <leader>H :Gbrowse<cr>
 
 " }}}
+  " NERDCommenter mappings {{{
+  if has("gui_macvim") && has("gui_running")
+    map <D-/> <plug>NERDCommenterToggle<CR>
+    imap <D-/> <Esc><plug>NERDCommenterToggle<CR>i
+  else
+    map <leader>/ <plug>NERDCommenterToggle<CR>
+    imap <leader>/ <Esc><plug>NERDCommenterToggle<CR>i
+  endif
+  " }}}
+  " ACK {{{
+  map <D-F> :Ack<space>
+  " }}}
+  " Syntastic {{{
+    let g:syntastic_enable_signs=1
+    let g:syntastic_quiet_warnings=0
+    let g:syntastic_auto_loc_list=2
+  " }}}
 
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
 
-if has('gui_running')
+if has('gui_running') " {{{
   set guifont=Inconsolata-dz\ for\ Powerline:h12
   " set guifont=Menlo\ Regular\ for\ Powerline:h12
   set linespace=1
@@ -557,7 +575,7 @@ if has('gui_running')
   set guicursor+=v:block-vCursor-blinkon0
   set guicursor+=i-ci:ver20-iCursor
 
-  if has("gui_macvim")
+  if has("gui_macvim") "{{{
     " Full screen means FULL screen
     set fuoptions=maxvert,maxhorz
 
@@ -585,10 +603,10 @@ if has('gui_running')
     inoremap <D-BS>     <esc>my0c`y
   else
     " Non-MacVim GUI, like Gvim
-  end
+  end " }}}
 else
   " Console Vim
-endif
+endif " }}}
 
 " }}}
 
