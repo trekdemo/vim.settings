@@ -89,6 +89,12 @@ let mapleader = ","
 let maplocalleader = "\\"
 
 " }}}
+" Refactoring {{{
+  " For local replace
+  nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
+  " For global replace
+  nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+" }}}
 " Omnicomplete in insert mode
 inoremap <c-l> <c-x><c-l>
 inoremap <c-f> <c-x><c-f>
@@ -346,6 +352,15 @@ augroup END
 augroup ft_php
     au!
     au Filetype php setlocal foldmethod=syntax
+augroup END
+
+" }}}
+" HAML {{{
+
+augroup ft_haml
+    au!
+    au Filetype haml setlocal foldlevelstart=999
+    au Filetype haml setlocal foldmethod=indent
 augroup END
 
 " }}}
