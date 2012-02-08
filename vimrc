@@ -22,8 +22,8 @@ set number                              " Show linenumbers
 set showcmd                             " Show info in the right bottom
 set ttyfast
 set textwidth=80
-"set colorcolumn=80
-set colorcolumn=+1
+set colorcolumn=+1                      " Display margin at 81
+set nocursorline                        " Do not hightlight the current line
 set scrolloff=5
 set sidescroll=1
 set sidescrolloff=10
@@ -74,6 +74,7 @@ set noswapfile                          " It's 2012, Vim.
 " Color scheme ------------------------------------------------------------ {{{
 
 syntax on                               " Switch syntax highlighting on
+set synmaxcol=220                       " Hightlight only the first 100 chars
 set background=dark
 colorscheme molokai
 
@@ -95,12 +96,15 @@ let maplocalleader = "\\"
   " For global replace
   nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 " }}}
+
 " Omnicomplete in insert mode
 inoremap <c-l> <c-x><c-l>
 inoremap <c-f> <c-x><c-f>
 
-" Restart Pow
-map <silent> <leader>rp :!touch tmp/restart.txt<cr>
+" Pow restart
+map <silent> <leader>pr :!powder restart<cr><cr>
+" Pow open
+map <silent> <leader>po :!powder open<cr><cr>
 
 " Change case
 nnoremap <C-u> gUiw
@@ -332,6 +336,7 @@ augroup ft_css
 
     au BufNewFile,BufRead *.less setlocal filetype=less
     au BufNewFile,BufRead *.scss setlocal filetype=scss
+    au BufNewFile,BufRead *.scss.erb setlocal filetype=scss
 
     au Filetype less,css,scss setlocal foldmethod=marker
     au Filetype less,css,scss setlocal foldmarker={,}
@@ -363,6 +368,11 @@ augroup ft_haml
     au Filetype haml setlocal foldmethod=indent
 augroup END
 
+" }}}
+" ActionScript {{{
+  au BufNewFile,BufRead *.as setlocal filetype=actionscript
+  au Filetype *.as setlocal foldmethod=marker
+  au Filetype *.as setlocal foldmarker={,}
 " }}}
 
 " }}}
@@ -458,6 +468,8 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " }}}
   " Taglist {{{
     let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+    " Regenerate ctags
+    map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=log -R * `rvm gemdir`/gems/*<CR><CR>
   " }}}
   " vim-css-color {{{
     let g:cssColorVimDoNotMessMyUpdatetime = 1
@@ -549,6 +561,25 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:syntastic_quiet_warnings=0
     let g:syntastic_auto_loc_list=2
   " }}}
+  " YankRing {{{
+  nnoremap <silent> <F6> :YRShow<cr>
+  let g:yankring_replace_n_pkey = '<D-P>'
+  let g:yankring_replace_n_nkey = '<D-P>'
+  let g:yankring_history_file = '.yankring_history'
+  let g:yankring_min_element_length = 2
+  " }}}
+  " Headlights {{{
+    let g:headlights_use_plugin_menu = 0
+    let g:headlights_smart_menus = 1
+    let g:headlights_show_commands = 1
+    let g:headlights_show_mappings = 1
+    let g:headlights_show_abbreviations = 0
+    let g:headlights_show_functions = 0
+    let g:headlights_show_highlights = 0
+    let g:headlights_show_files = 0
+    let g:headlights_show_load_order = 0
+    let g:headlights_debug_mode = 0
+  " }}}
 
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
@@ -557,7 +588,6 @@ if has('gui_running') " {{{
   set guifont=Inconsolata-dz\ for\ Powerline:h12
   " set guifont=Menlo\ Regular\ for\ Powerline:h12
   set linespace=1
-  set lines=60 columns=180
 
   " Remove all the UI cruft
   set go-=T
