@@ -4,7 +4,7 @@
 " Version:      0.1.1
 " Description:  Change color scheme according to position of the sun.
 " License:      GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html)
-" Requirements: gVIM compiled with +float option 
+" Requirements: gVIM compiled with +float option
 " Documetation:
 "
 " This module uses the algorithm from "Almanac for Computers, 1990"
@@ -17,9 +17,9 @@
 "
 " Automatic refresh code taken from:
 " http://www.vim.org/scripts/script.php?script_id=2658
-" 
+"
 " INSTALLATION
-" 
+"
 " Just put the daytimecolorer.vim into .vim/plugin/
 "
 " You can manually call g:dtcSetColor() to change color scheme, sun position
@@ -36,7 +36,7 @@
 " " Following schemes are optional.
 " let g:dtcDawnScheme = "zenburn" "if none - day scheme will be used
 " let g:dtcDuskScheme = "zenburn" "if none - night scheme will be used
-" 
+"
 " " Geographical coordinates to calculate sun position
 " let g:dtcLatitude = 59.935  "Positive for North negative for South
 " let g:dtcLongitude = 30.325 "Positive for East and negative for West
@@ -171,7 +171,7 @@ function! s:calculateSunTime(zenith, sunTime, dayOfYear)
     let l:L = s:degrify(l:M + (1.916 * s:dSin(l:M)) + (0.020 * s:dSin(2*l:M))
                 \ + 282.634)
     call s:dbg("L=".string(l:L))
-    
+
     " Calculate sun's declination
     let l:sinDec = 0.39782 * s:dSin(l:L)
     let l:cosDec = s:dCos(s:dAsin(l:sinDec))
@@ -182,7 +182,7 @@ function! s:calculateSunTime(zenith, sunTime, dayOfYear)
     let l:cosH = (s:dCos(a:zenith) - (l:sinDec * s:dSin(g:dtcLatitude))) /
                 \ (l:cosDec * s:dCos(g:dtcLatitude))
     call s:dbg("cosH=".string(l:cosH))
-    
+
     " If cosH is not in the (-1;1) then sun didn't get in given zenith
     if l:cosH > 1
         return "polar_night"
@@ -274,7 +274,7 @@ function! s:calculateSunTimes()
     call s:dbg("sunset=".string(s:sunsetTime))
     call s:dbg("dusk=".string(s:duskTime))
 endfunction
-    
+
 
 function! g:dtcSetColor()
     if !exists("s:currentDay") || s:currentDay != str2nr(strftime("%j"))
@@ -294,16 +294,18 @@ function! g:dtcSetColor()
         " It's night
         if !exists("s:currentColo") || s:currentColo != g:dtcNightScheme
             let s:currentColo = g:dtcNightScheme
-            silent execute "colo " . g:dtcNightScheme 
+            silent execute "colo " . g:dtcNightScheme
+            set background=dark
             redraw
             echo "Yawn... It's " . strftime("%H:%M") . " and there is " .
                 \ string(s:dawnTime-s:currentTime) . " minutes till dawn."
         endif
     elseif s:currentTime > s:dawnTime && s:currentTime < s:sunriseTime
-        " It's dawn  
+        " It's dawn
         if !exists("s:currentColo") || s:currentColo != g:dtcDawnScheme
             let s:currentColo = g:dtcDawnScheme
             silent execute "colo " . g:dtcDawnScheme
+            set background=dark
             redraw
             echo "Good morning! It's " . strftime("%H:%M") . " and there is " .
                 \ string(s:sunriseTime-s:currentTime) . " minutes till sunrise."
@@ -313,6 +315,7 @@ function! g:dtcSetColor()
         if !exists("s:currentColo") || s:currentColo != g:dtcDayScheme
             let s:currentColo = g:dtcDayScheme
             silent execute "colo " . g:dtcDayScheme
+            set background=light
             redraw
             echo "G'day! It's " . strftime("%H:%M") . " and there is " .
                 \ string(s:sunsetTime-s:currentTime) . " minutes till sunset."
@@ -322,6 +325,7 @@ function! g:dtcSetColor()
         if !exists("s:currentColo") || s:currentColo != g:dtcDuskScheme
             let s:currentColo = g:dtcDuskScheme
             silent execute "colo " . g:dtcDuskScheme
+            set background=dark
             redraw
             echo "Evening. It's " . strftime("%H:%M") . " and there still " .
                 \ string(s:duskTime-s:currentTime) . " minutes till dark."
