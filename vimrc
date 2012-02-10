@@ -10,6 +10,12 @@
 " Preamble ---------------------------------------------------------------- {{{
 
 filetype off
+
+let g:pathogen_disabled = []
+" Headlights requires at least vim 7.3 and Pyton
+if v:version < '700' || !has('python')
+  call add(g:pathogen_disabled, 'vim-headlights')
+endif
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 set nocompatible                        " I'm using vim not vi
@@ -28,7 +34,8 @@ set scrolloff=5
 set sidescroll=1
 set sidescrolloff=10
 set formatoptions=qrn1
-set clipboard+=unnamed                  " Yanks go on clipboard instead.
+"set clipboard+=unnamed                  " Yanks go on clipboard instead.
+set pastetoggle=<F8>
 set novisualbell                        " No blinking .
 set noerrorbells                        " No noise.
 set lazyredraw
@@ -74,6 +81,7 @@ set noswapfile                          " It's 2012, Vim.
 " Color scheme ------------------------------------------------------------ {{{
 
 syntax on                               " Switch syntax highlighting on
+set t_Co=256
 set synmaxcol=220                       " Hightlight only the first 100 chars
 set background=dark
 colorscheme molokai
@@ -452,7 +460,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 
 " }}}
 " Plugin settings --------------------------------------------------------- {{{
-
   " NERDTree {{{
     au Filetype nerdtree setlocal nolist
 
@@ -561,13 +568,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:syntastic_quiet_warnings=0
     let g:syntastic_auto_loc_list=2
   " }}}
-  " YankRing {{{
-  nnoremap <silent> <F6> :YRShow<cr>
-  let g:yankring_replace_n_pkey = '<D-P>'
-  let g:yankring_replace_n_nkey = '<D-P>'
-  let g:yankring_history_file = '.yankring_history'
-  let g:yankring_min_element_length = 2
-  " }}}
   " Headlights {{{
     let g:headlights_use_plugin_menu = 0
     let g:headlights_smart_menus = 1
@@ -579,6 +579,24 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:headlights_show_files = 0
     let g:headlights_show_load_order = 0
     let g:headlights_debug_mode = 0
+  " }}}
+  " DayTimeColorer {{{
+    " Define color schemes
+    let g:dtcDayScheme = "solarized"
+    let g:dtcNightScheme = "molokai"
+    " Those are optional
+    let g:dtcDawnScheme = "zenburn"
+    let g:dtcDuskScheme = "zenburn"
+
+    " Set coordinates of your place
+    let g:dtcLatitude = 47.49815
+    let g:dtcLongitude = 19.0388
+
+    " Set your timezone
+    let g:dtcTimeOffset = 1
+
+    " Enable automatic color refresh (updates color scheme without restarting vim, but may use some extra resources)
+    let g:dtcAutoRefresh = 1
   " }}}
 
 " }}}
