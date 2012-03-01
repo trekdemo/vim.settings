@@ -294,49 +294,50 @@ function! g:dtcSetColor()
         " It's night
         if !exists("s:currentColo") || s:currentColo != g:dtcNightScheme
             let s:currentColo = g:dtcNightScheme
+            silent execute "set background=dark"
             silent execute "colo " . g:dtcNightScheme
-            set background=dark
             redraw
-            echo "Yawn... It's " . strftime("%H:%M") . " and there is " .
-                \ string(s:dawnTime-s:currentTime) . " minutes till dawn."
+            " echo "Yawn... It's " . strftime("%H:%M") . " and there is " .
+            "    \ string(s:dawnTime-s:currentTime) . " minutes till dawn."
         endif
     elseif s:currentTime > s:dawnTime && s:currentTime < s:sunriseTime
         " It's dawn
         if !exists("s:currentColo") || s:currentColo != g:dtcDawnScheme
             let s:currentColo = g:dtcDawnScheme
+            silent execute "set background=dark"
             silent execute "colo " . g:dtcDawnScheme
-            set background=dark
             redraw
-            echo "Good morning! It's " . strftime("%H:%M") . " and there is " .
-                \ string(s:sunriseTime-s:currentTime) . " minutes till sunrise."
+            " echo "Good morning! It's " . strftime("%H:%M") . " and there is " .
+            "     \ string(s:sunriseTime-s:currentTime) . " minutes till sunrise."
         endif
     elseif s:currentTime > s:sunriseTime && s:currentTime < s:sunsetTime
         " It's day
         if !exists("s:currentColo") || s:currentColo != g:dtcDayScheme
             let s:currentColo = g:dtcDayScheme
+            silent execute "set background=light"
             silent execute "colo " . g:dtcDayScheme
-            set background=light
             redraw
-            echo "G'day! It's " . strftime("%H:%M") . " and there is " .
-                \ string(s:sunsetTime-s:currentTime) . " minutes till sunset."
+            " echo "G'day! It's " . strftime("%H:%M") . " and there is " .
+            "     \ string(s:sunsetTime-s:currentTime) . " minutes till sunset."
         endif
     elseif s:currentTime > s:sunsetTime && s:currentTime < s:duskTime
         " It's dusk
         if !exists("s:currentColo") || s:currentColo != g:dtcDuskScheme
             let s:currentColo = g:dtcDuskScheme
+            silent execute "set background=dark"
             silent execute "colo " . g:dtcDuskScheme
-            set background=dark
             redraw
-            echo "Evening. It's " . strftime("%H:%M") . " and there still " .
-                \ string(s:duskTime-s:currentTime) . " minutes till dark."
+            " echo "Evening. It's " . strftime("%H:%M") . " and there still " .
+            "     \ string(s:duskTime-s:currentTime) . " minutes till dark."
         endif
     else
         " It's night again
         if !exists("s:currentColo") || s:currentColo != g:dtcNightScheme
             let s:currentColo = g:dtcNightScheme
+            silent execute "set background=dark"
             silent execute "colo " . g:dtcNightScheme
             redraw
-            echo "Zzzz... It's " . strftime("%H:%M") . " see you tomorrow..."
+            " echo "Zzzz... It's " . strftime("%H:%M") . " see you tomorrow..."
         endif
     endif
 endfunction

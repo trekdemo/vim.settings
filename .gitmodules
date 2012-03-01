@@ -76,3 +76,9 @@
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
+[submodule "vim-taskpaper"]
+	path = vim-taskpaper
+	url = https://github.com/davidoc/taskpaper.vim.git
+[submodule "bundle/vim-textile"]
+	path = bundle/vim-textile
+	url = https://github.com/timcharper/textile.vim.git

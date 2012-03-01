@@ -82,7 +82,7 @@ set noswapfile                          " It's 2012, Vim.
 
 syntax on                               " Switch syntax highlighting on
 set t_Co=256
-set synmaxcol=220                       " Hightlight only the first 100 chars
+set synmaxcol=300                       " Hightlight only the first 100 chars
 set background=dark
 colorscheme molokai
 
@@ -379,8 +379,15 @@ augroup END
 " }}}
 " ActionScript {{{
   au BufNewFile,BufRead *.as setlocal filetype=actionscript
-  au Filetype *.as setlocal foldmethod=marker
-  au Filetype *.as setlocal foldmarker={,}
+  au Filetype actionscript setlocal foldmethod=marker
+  au Filetype actionscript setlocal foldmarker={,}
+" }}}
+" Javascript {{{
+  au Filetype javascript setlocal foldmethod=marker
+  au Filetype javascript setlocal foldmarker={,}
+" }}}
+" CoffeeScript {{{
+  au Filetype coffee setlocal foldmethod=indent
 " }}}
 
 " }}}
@@ -552,6 +559,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 
 " }}}
   " NERDCommenter mappings {{{
+  let NERDSpaceDelims = 1
   if has("gui_macvim") && has("gui_running")
     map <D-/> <plug>NERDCommenterToggle<CR>
     imap <D-/> <Esc><plug>NERDCommenterToggle<CR>i
@@ -581,22 +589,24 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:headlights_debug_mode = 0
   " }}}
   " DayTimeColorer {{{
-    " Define color schemes
-    let g:dtcDayScheme = "solarized"
-    let g:dtcNightScheme = "molokai"
-    " Those are optional
-    let g:dtcDawnScheme = "zenburn"
-    let g:dtcDuskScheme = "zenburn"
+    if has('gui_running') " {{{
+      " Define color schemes
+      let g:dtcDayScheme = "solarized"
+      let g:dtcNightScheme = "molokai"
+      " Those are optional
+      "let g:dtcDawnScheme = "zenburn"
+      "let g:dtcDuskScheme = "zenburn"
 
-    " Set coordinates of your place
-    let g:dtcLatitude = 47.49815
-    let g:dtcLongitude = 19.0388
+      " Set coordinates of your place
+      let g:dtcLatitude = 47.49815
+      let g:dtcLongitude = 19.0388
 
-    " Set your timezone
-    let g:dtcTimeOffset = 1
+      " Set your timezone
+      let g:dtcTimeOffset = 1
 
-    " Enable automatic color refresh (updates color scheme without restarting vim, but may use some extra resources)
-    let g:dtcAutoRefresh = 1
+      " Enable automatic color refresh (updates color scheme without restarting vim, but may use some extra resources)
+      let g:dtcAutoRefresh = 1
+    end
   " }}}
 
 " }}}
@@ -622,7 +632,7 @@ if has('gui_running') " {{{
   " Different cursors for different modes.
   set guicursor=n-c:block-Cursor-blinkon0
   set guicursor+=v:block-vCursor-blinkon0
-  set guicursor+=i-ci:ver20-iCursor
+  "set guicursor+=i-ci:ver20-iCursor
 
   if has("gui_macvim") "{{{
     " Full screen means FULL screen
