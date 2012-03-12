@@ -82,3 +82,9 @@
 [submodule "bundle/vim-textile"]
 	path = bundle/vim-textile
 	url = https://github.com/timcharper/textile.vim.git
+[submodule "bundle/vim-align"]
+	path = bundle/vim-align
+	url = https://github.com/tsaleh/vim-align.git
+[submodule "bundle/vim-ant"]
+	path = bundle/vim-ant
+	url = https://github.com/vim-scripts/Ant.git

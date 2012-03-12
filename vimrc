@@ -34,7 +34,7 @@ set scrolloff=5
 set sidescroll=1
 set sidescrolloff=10
 set formatoptions=qrn1
-"set clipboard+=unnamed                  " Yanks go on clipboard instead.
+set clipboard+=unnamed                  " Yanks go on clipboard instead.
 set pastetoggle=<F8>
 set novisualbell                        " No blinking .
 set noerrorbells                        " No noise.
@@ -243,8 +243,8 @@ else
   " Bubble single lines
   nmap <C-Up> [e
   nmap <C-Down> ]e
-  nmap <C-k> [e
-  nmap <C-j> ]e
+  " nmap <C-k> [e
+  " nmap <C-j> ]e
 
   " Bubble multiple lines
   vmap <C-Up> [egv
@@ -364,7 +364,8 @@ augroup END
 
 augroup ft_php
     au!
-    au Filetype php setlocal foldmethod=syntax
+    au Filetype php setlocal foldmethod=marker
+    au Filetype php setlocal foldmmarker={,}
 augroup END
 
 " }}}
@@ -471,7 +472,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     au Filetype nerdtree setlocal nolist
 
     let NERDTreeHighlightCursorline=1
-    let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index', 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json', '.*\.o$', 'db.db', 'tags.bak']
+    let NERDTreeIgnore = ['.vim$', '\~$', '.*.pid', '.*-fixtures-.*.json', '.*\.o$', 'db.db', 'tags.bak']
     let NERDTreeMinimalUI = 1
     let NERDTreeDirArrows = 1
     let g:nerdtree_tabs_open_on_gui_startup = 0
@@ -481,9 +482,8 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:Powerline_symbols = 'fancy'
   " }}}
   " Taglist {{{
-    let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
     " Regenerate ctags
-    map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=log -R * `rvm gemdir`/gems/*<CR><CR>
+    map <Leader>rt :!ctags -R * $GEM_HOME $MY_RUBY_HOME<CR>
   " }}}
   " vim-css-color {{{
     let g:cssColorVimDoNotMessMyUpdatetime = 1
@@ -494,7 +494,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:ctrlp_max_height = 20
     let g:ctrlp_extensions = ['tag']
     let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$|tmp',
       \ 'file': '\.exe$\|\.so$\|\.dll$',
       \ 'link': 'some_bad_symbolic_link',
     \ }
@@ -530,7 +530,25 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     onoremap <silent> <Leader>t      :call EasyMotion#T(0, 0)<CR>
     onoremap <silent> <Leader>T      :call EasyMotion#T(0, 1)<CR>
 
-" }}}
+  " }}}
+  " Shell {{{
+    function! s:ExecuteInShell(command) " {{{
+        let command = join(map(split(a:command), 'expand(v:val)'))
+        let winnr = bufwinnr('^' . command . '$')
+        silent! execute  winnr < 0 ? 'botright vnew ' . fnameescape(command) : winnr . 'wincmd w'
+        setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap nonumber
+        echo 'Execute ' . command . '...'
+        silent! execute 'silent %!'. command
+        silent! redraw
+        silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+        silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>:AnsiEsc<CR>'
+        silent! execute 'nnoremap <silent> <buffer> q :q<CR>'
+        silent! execute 'AnsiEsc'
+        echo 'Shell command ' . command . ' executed.'
+    endfunction " }}}
+    command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+    nnoremap <leader>! :Shell<space>
+  " }}}
   " Fugitive {{{
 
     nnoremap <leader>gd :Gdiff<cr>
@@ -543,7 +561,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     nnoremap <leader>gci :Gcommit<cr>
     nnoremap <leader>gm :Gmove<cr>
     nnoremap <leader>gr :Gremove<cr>
-    nnoremap <leader>gl :Shell git gl -18<cr>:wincmd \|<cr>
+    nnoremap <leader>gl :Shell git lg -25<cr>:wincmd \|<cr>
     nnoremap <leader>gx :Git dx<cr>
     nnoremap <leader>gt :Git dt<cr>
 
@@ -569,7 +587,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   endif
   " }}}
   " ACK {{{
-  map <D-F> :Ack<space>
+    map <D-F> :Ack<space>
   " }}}
   " Syntastic {{{
     let g:syntastic_enable_signs=1
@@ -589,13 +607,13 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:headlights_debug_mode = 0
   " }}}
   " DayTimeColorer {{{
-    if has('gui_running') " {{{
+    if 0 && has('gui_running') " {{{
       " Define color schemes
       let g:dtcDayScheme = "solarized"
       let g:dtcNightScheme = "molokai"
       " Those are optional
-      "let g:dtcDawnScheme = "zenburn"
-      "let g:dtcDuskScheme = "zenburn"
+      " let g:dtcDawnScheme = "zenburn"
+      " let g:dtcDuskScheme = "zenburn"
 
       " Set coordinates of your place
       let g:dtcLatitude = 47.49815
@@ -665,6 +683,16 @@ if has('gui_running') " {{{
   end " }}}
 else
   " Console Vim
+  " tmux will only forward escape sequences to the terminal if surrounded by a DCS sequence
+  " http://sourceforge.net/mailarchive/forum.php?thread_name=AANLkTinkbdoZ8eNR1X2UobLTeww1jFrvfJxTMfKSq-L%2B%40mail.gmail.com&forum_name=tmux-users
+
+  if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
 endif " }}}
 
 " }}}

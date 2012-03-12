@@ -294,7 +294,6 @@ function! g:dtcSetColor()
         " It's night
         if !exists("s:currentColo") || s:currentColo != g:dtcNightScheme
             let s:currentColo = g:dtcNightScheme
-            silent execute "set background=dark"
             silent execute "colo " . g:dtcNightScheme
             redraw
             " echo "Yawn... It's " . strftime("%H:%M") . " and there is " .
@@ -304,7 +303,6 @@ function! g:dtcSetColor()
         " It's dawn
         if !exists("s:currentColo") || s:currentColo != g:dtcDawnScheme
             let s:currentColo = g:dtcDawnScheme
-            silent execute "set background=dark"
             silent execute "colo " . g:dtcDawnScheme
             redraw
             " echo "Good morning! It's " . strftime("%H:%M") . " and there is " .
@@ -314,7 +312,6 @@ function! g:dtcSetColor()
         " It's day
         if !exists("s:currentColo") || s:currentColo != g:dtcDayScheme
             let s:currentColo = g:dtcDayScheme
-            silent execute "set background=light"
             silent execute "colo " . g:dtcDayScheme
             redraw
             " echo "G'day! It's " . strftime("%H:%M") . " and there is " .
@@ -324,7 +321,6 @@ function! g:dtcSetColor()
         " It's dusk
         if !exists("s:currentColo") || s:currentColo != g:dtcDuskScheme
             let s:currentColo = g:dtcDuskScheme
-            silent execute "set background=dark"
             silent execute "colo " . g:dtcDuskScheme
             redraw
             " echo "Evening. It's " . strftime("%H:%M") . " and there still " .
@@ -334,7 +330,6 @@ function! g:dtcSetColor()
         " It's night again
         if !exists("s:currentColo") || s:currentColo != g:dtcNightScheme
             let s:currentColo = g:dtcNightScheme
-            silent execute "set background=dark"
             silent execute "colo " . g:dtcNightScheme
             redraw
             " echo "Zzzz... It's " . strftime("%H:%M") . " see you tomorrow..."
