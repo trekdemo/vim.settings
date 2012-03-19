@@ -23,6 +23,7 @@ set nocompatible                        " I'm using vim not vi
 " }}}
 " Basic options ----------------------------------------------------------- {{{
 set encoding=utf-8
+set shell=zsh
 set nowrap                              " Do not wrap long lines
 set number                              " Show linenumbers
 set showcmd                             " Show info in the right bottom
@@ -119,7 +120,7 @@ nnoremap <C-u> gUiw
 inoremap <C-u> <esc>gUiwea
 
 " Substitute
-nnoremap <leader>s :%s//<left>
+nnoremap <leader>s :%s/
 
 " Emacs bindings in command line mode
 cnoremap <c-a> <home>
@@ -139,6 +140,11 @@ inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 
 map <tab> %
+
+" GUndo
+nmap <silent> <leader>u :GundoToggle<CR>
+" Ruby hashrocket
+imap hh =>
 
 " Formatting, TextMate-style
 nnoremap Q gqip
@@ -397,7 +403,6 @@ augroup END
 
   " Resize splits when the window is resized
   au VimResized * :wincmd =
-  au BufRead,BufNewFile *.as set filetype=actionscript
   au BufRead,BufNewFile {Guardfile} set ft=ruby
   " Make sure Vim returns to the same line when you reopen a file.
 
@@ -445,14 +450,10 @@ set showmatch
 set hlsearch
 set gdefault
 
-
-
 " }}}
 " Wildmenu completion ----------------------------------------------------- {{{
 
 set wildmenu
-" TODO: Investigate the precise meaning of these settings
-" set wildmode=list:longest,list:full
 set wildmode=list:longest
 
 set wildignore+=.hg,.git,.svn                    " Version control
@@ -494,7 +495,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:ctrlp_max_height = 20
     let g:ctrlp_extensions = ['tag']
     let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$|tmp',
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$\|tmp',
       \ 'file': '\.exe$\|\.so$\|\.dll$',
       \ 'link': 'some_bad_symbolic_link',
     \ }

@@ -88,3 +88,15 @@
 [submodule "bundle/vim-ant"]
 	path = bundle/vim-ant
 	url = https://github.com/vim-scripts/Ant.git
+[submodule "bundle/ant"]
+	path = bundle/ant
+	url = https://github.com/lyricallogical/ant.vim
+[submodule "bundle/vim-webapi"]
+	path = bundle/vim-webapi
+	url = https://github.com/mattn/webapi-vim
+[submodule "bundle/vim-vdbi"]
+	path = bundle/vim-vdbi
+	url = https://github.com/mattn/vdbi-vim
+[submodule "bundle/vim-gundo"]
+	path = bundle/vim-gundo
+	url = https://github.com/sjl/gundo.vim.git
