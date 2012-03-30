@@ -371,7 +371,7 @@ augroup END
 augroup ft_php
     au!
     au Filetype php setlocal foldmethod=marker
-    au Filetype php setlocal foldmmarker={,}
+    au Filetype php setlocal foldmarker={,}
 augroup END
 
 " }}}
@@ -385,9 +385,14 @@ augroup END
 
 " }}}
 " ActionScript {{{
-  au BufNewFile,BufRead *.as setlocal filetype=actionscript
-  au Filetype actionscript setlocal foldmethod=marker
-  au Filetype actionscript setlocal foldmarker={,}
+  augroup ft_actionscript
+    au BufNewFile,BufRead *.as setlocal filetype=actionscript
+    au Filetype actionscript setlocal foldmethod=marker
+    au Filetype actionscript setlocal foldmarker={,}
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+    setlocal softtabstop=4
+  augroup END
 " }}}
 " Javascript {{{
   au Filetype javascript setlocal foldmethod=marker
