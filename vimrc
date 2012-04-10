@@ -67,6 +67,9 @@ set softtabstop=2
 set expandtab
 set formatoptions=qrn1
 set laststatus=2
+set notimeout
+set ttimeout
+set timeoutlen=50
 " Backups {{{
 
 " Make Vim able to edit crontab files again.
@@ -85,7 +88,8 @@ syntax on                               " Switch syntax highlighting on
 set t_Co=256
 set synmaxcol=300                       " Hightlight only the first 100 chars
 set background=dark
-colorscheme molokai
+" colorscheme molokai
+colorscheme solarized
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -105,6 +109,9 @@ let maplocalleader = "\\"
   " For global replace
   nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 " }}}
+
+" Unfuck my screen
+nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
 
 " Omnicomplete in insert mode
 inoremap <c-l> <c-x><c-l>
@@ -234,17 +241,17 @@ if has("gui_macvim") && has("gui_running")
 else
   " Map command-[ and command-] to indenting or outdenting
   " while keeping the original selection in visual mode
-  vmap <A-]> >gv
-  vmap <A-[> <gv
+  vmap <M-]> >gv
+  vmap <M-[> <gv
 
-  nmap <A-]> >>
-  nmap <A-[> <<
+  nmap <M-]> >>
+  nmap <M-[> <<
 
-  omap <A-]> >>
-  omap <A-[> <<
+  omap <M-]> >>
+  omap <M-[> <<
 
-  imap <A-]> <Esc>>>i
-  imap <A-[> <Esc><<i
+  imap <M-]> <Esc>>>i
+  imap <M-[> <Esc><<i
 
   " Bubble single lines
   nmap <C-Up> [e
@@ -283,6 +290,9 @@ else
   imap <C-8> <Esc>8gt
   map  <C-9> 9gt
   imap <C-9> <Esc>9gt
+
+  map <leader>tn :tabnext<cr>
+  map <leader>tp :tabprevious<cr>
 endif
 " }}}
 " Folding ----------------------------------------------------------------- {{{
