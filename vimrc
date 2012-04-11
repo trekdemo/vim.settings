@@ -89,6 +89,9 @@ set t_Co=256
 set synmaxcol=300                       " Hightlight only the first 100 chars
 set background=dark
 " colorscheme molokai
+" let g:solarized_termcolors=256
+let g:solarized_underline = 0
+let g:solarized_termtrans = 1
 colorscheme solarized
 
 " Highlight VCS conflict markers
