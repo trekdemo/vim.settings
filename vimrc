@@ -84,8 +84,8 @@ set noswapfile                          " It's 2012, Vim.
 " }}}
 " Color scheme ------------------------------------------------------------ {{{
 
-syntax on                               " Switch syntax highlighting on
-set t_Co=256
+syntax enable                           " Switch syntax highlighting on
+set t_Co=256                            " User 256 colors
 set synmaxcol=300                       " Hightlight only the first 100 chars
 set background=dark
 " colorscheme molokai
@@ -100,6 +100,13 @@ match ErrorMsg '\s\+$'
 
 " }}}
 " Mappings ---------------------------------------------------------------- {{{
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
 " Leader {{{
 
 let mapleader = ","
@@ -146,6 +153,7 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
+" Move up/down in insert mode
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 
