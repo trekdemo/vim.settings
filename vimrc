@@ -87,7 +87,7 @@ set noswapfile                          " It's 2012, Vim.
 syntax enable                           " Switch syntax highlighting on
 set t_Co=256                            " User 256 colors
 set synmaxcol=300                       " Hightlight only the first 100 chars
-set background=dark
+" set background=dark
 " colorscheme molokai
 " let g:solarized_termcolors=256
 let g:solarized_underline = 0
@@ -121,7 +121,7 @@ let maplocalleader = "\\"
 " }}}
 
 " Unfuck my screen
-nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
+nmap U :syntax sync fromstart<cr>:redraw!<cr>
 
 " Omnicomplete in insert mode
 inoremap <c-l> <c-x><c-l>
@@ -512,9 +512,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     " Regenerate ctags
     map <Leader>rt :!ctags -R * $GEM_HOME $MY_RUBY_HOME<CR>
   " }}}
-  " vim-css-color {{{
-    let g:cssColorVimDoNotMessMyUpdatetime = 1
-  " }}}
   " Ctrl-P {{{
     let g:ctrlp_root_markers = ['.rvmrc']
     let g:ctrlp_working_path_mode = 2
@@ -651,9 +648,8 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 
       " Enable automatic color refresh (updates color scheme without restarting vim, but may use some extra resources)
       let g:dtcAutoRefresh = 1
-    end
+    end "}}}
   " }}}
-
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
 
