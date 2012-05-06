@@ -85,3 +85,6 @@
 [submodule "bundle/vitality"]
 	path = bundle/vitality
 	url = https://github.com/sjl/vitality.vim.git
+[submodule "bundle/zenconding"]
+	path = bundle/zenconding
+	url = https://github.com/mattn/zencoding-vim.git
