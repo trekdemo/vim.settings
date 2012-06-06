@@ -23,7 +23,7 @@ set nocompatible                        " I'm using vim not vi
 " }}}
 " Basic options ----------------------------------------------------------- {{{
 set encoding=utf-8
-set shell=zsh
+set shell=/bin/zsh
 set nowrap                              " Do not wrap long lines
 set number                              " Show linenumbers
 set showcmd                             " Show info in the right bottom
@@ -629,26 +629,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:headlights_show_files = 0
     let g:headlights_show_load_order = 0
     let g:headlights_debug_mode = 0
-  " }}}
-  " DayTimeColorer {{{
-    if 0 && has('gui_running') " {{{
-      " Define color schemes
-      let g:dtcDayScheme = "solarized"
-      let g:dtcNightScheme = "molokai"
-      " Those are optional
-      " let g:dtcDawnScheme = "zenburn"
-      " let g:dtcDuskScheme = "zenburn"
-
-      " Set coordinates of your place
-      let g:dtcLatitude = 47.49815
-      let g:dtcLongitude = 19.0388
-
-      " Set your timezone
-      let g:dtcTimeOffset = 1
-
-      " Enable automatic color refresh (updates color scheme without restarting vim, but may use some extra resources)
-      let g:dtcAutoRefresh = 1
-    end "}}}
   " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
