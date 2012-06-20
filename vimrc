@@ -124,8 +124,8 @@ let maplocalleader = "\\"
 nmap U :syntax sync fromstart<cr>:redraw!<cr>
 
 " Omnicomplete in insert mode
-inoremap <c-l> <c-x><c-l>
-inoremap <c-f> <c-x><c-f>
+inoremap <c-l> <c-x><c-l> " Lines
+inoremap <c-f> <c-x><c-f> " File names
 
 " Pow restart
 map <silent> <leader>pr :!powder restart<cr><cr>
@@ -133,7 +133,7 @@ map <silent> <leader>pr :!powder restart<cr><cr>
 map <silent> <leader>po :!powder open<cr><cr>
 
 " Change case
-nnoremap <C-u> gUiw
+" nnoremap <C-u> gUiw
 inoremap <C-u> <esc>gUiwea
 
 " Substitute
@@ -410,9 +410,11 @@ augroup END
     au BufNewFile,BufRead *.as setlocal filetype=actionscript
     au Filetype actionscript setlocal foldmethod=marker
     au Filetype actionscript setlocal foldmarker={,}
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-    setlocal softtabstop=4
+    au FileType actionscript set omnifunc=actionscriptcomplete#CompleteAS
+    au FileType actionscript set dictionary=$HOME/.vim/dict/actionscript.dict
+    setlocal tabstop=2
+    setlocal shiftwidth=2
+    setlocal softtabstop=2
   augroup END
 " }}}
 " Javascript {{{
@@ -458,7 +460,6 @@ augroup END
 " Quick editing ----------------------------------------------------------- {{{
 
 nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e ~/.vimrc<cr>
-nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/janus/vim/tools/snipmate-snippets<cr>
 nnoremap <leader>eg <C-w>s<C-w>j<C-w>L:e ~/.gitconfig<cr>
 nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
 
@@ -483,9 +484,6 @@ set wildmenu
 set wildmode=list:longest
 
 set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store                       " OSX bullshit
@@ -513,7 +511,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     map <Leader>rt :!ctags -R * $GEM_HOME $MY_RUBY_HOME<CR>
   " }}}
   " Ctrl-P {{{
-    let g:ctrlp_root_markers = ['.rvmrc']
+    let g:ctrlp_root_markers = ['.rvmrc', '.git']
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_max_height = 20
     let g:ctrlp_extensions = ['tag']

@@ -88,3 +88,9 @@
 [submodule "bundle/zenconding"]
 	path = bundle/zenconding
 	url = https://github.com/mattn/zencoding-vim.git
+[submodule "bundle/apidock"]
+	path = bundle/apidock
+	url = https://github.com/mileszs/apidock.vim.git
+[submodule "bundle/vim-tagbar"]
+	path = bundle/vim-tagbar
+	url = https://github.com/majutsushi/tagbar.git
