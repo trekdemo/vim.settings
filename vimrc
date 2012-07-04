@@ -124,8 +124,10 @@ let maplocalleader = "\\"
 nmap U :syntax sync fromstart<cr>:redraw!<cr>
 
 " Omnicomplete in insert mode
-inoremap <c-l> <c-x><c-l> " Lines
-inoremap <c-f> <c-x><c-f> " File names
+" Lines
+inoremap <c-l> <c-x><c-l>
+" File names
+inoremap <c-f> <c-x><c-f>
 
 " Pow restart
 map <silent> <leader>pr :!powder restart<cr><cr>
@@ -410,11 +412,13 @@ augroup END
     au BufNewFile,BufRead *.as setlocal filetype=actionscript
     au Filetype actionscript setlocal foldmethod=marker
     au Filetype actionscript setlocal foldmarker={,}
-    au FileType actionscript set omnifunc=actionscriptcomplete#CompleteAS
+    au FileType actionscript set omnifunc=actionscriptcomplete#Complete
     au FileType actionscript set dictionary=$HOME/.vim/dict/actionscript.dict
-    setlocal tabstop=2
-    setlocal shiftwidth=2
-    setlocal softtabstop=2
+    au FileType actionscript setlocal autoindent
+    au FileType actionscript setlocal expandtab
+    au FileType actionscript setlocal tabstop=2
+    au FileType actionscript setlocal shiftwidth=2
+    au FileType actionscript setlocal softtabstop=2
   augroup END
 " }}}
 " Javascript {{{
@@ -462,6 +466,7 @@ augroup END
 nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e ~/.vimrc<cr>
 nnoremap <leader>eg <C-w>s<C-w>j<C-w>L:e ~/.gitconfig<cr>
 nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
+nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
 
 " }}}
 " Searching and movement -------------------------------------------------- {{{
@@ -506,9 +511,20 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " Powerline {{{
     let g:Powerline_symbols = 'fancy'
   " }}}
-  " Taglist {{{
+  " Tagbar {{{
     " Regenerate ctags
-    map <Leader>rt :!ctags -R * $GEM_HOME $MY_RUBY_HOME<CR>
+    function! RegenerateCTags()
+      let paths = ""
+      if &ft == 'ruby'
+        let paths = "$GEM_HOME $MY_RUBY_HOME"
+      elseif &ft == 'actionscript'
+        let paths = "$FLEX_HOME/framework/sources/"
+      end
+      echo paths;
+      :execute ":!ctags -R * ".paths
+    endfunction
+    map <Leader>rt :call RegenerateCTags()<CR>
+    nmap <leader>b :TagbarToggle<CR>
   " }}}
   " Ctrl-P {{{
     let g:ctrlp_root_markers = ['.rvmrc', '.git']
@@ -627,6 +643,9 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:headlights_show_files = 0
     let g:headlights_show_load_order = 0
     let g:headlights_debug_mode = 0
+  " }}}
+  " Supertab {{{
+    let g:loaded_supertab = 1
   " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
