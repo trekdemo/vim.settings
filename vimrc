@@ -632,10 +632,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:syntastic_quiet_warnings=0
     let g:syntastic_auto_loc_list=2
   " }}}
-  " Supertab {{{
-    " Disable supertab
-    let g:loaded_supertab = 1
-  " }}}
   " AutoComplPop {{{
     " Disable plugin
     let g:loaded_acp = 1
