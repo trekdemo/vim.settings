@@ -8,19 +8,19 @@
 "
 function! actionscriptcomplete#Complete(findstart, base)
 	if a:findstart == 1 " locate the start of the replacement text
-		let insertCol = col('.') - 1 
+		let insertCol = col('.') - 1
 		let line = getline('.')
 
 		while insertCol >= 0
 			let c = line[insertCol - 1]
 			if c =~ '\w'
 				let insertCol -= 1
-			else 
+			else
 				let s:context = line[0:insertCol - 1]
-				break	
+				break
 			endif
 		endwhile
-		
+
 		return insertCol
 	else " return list of matches available
 		let s:base = a:base
@@ -43,12 +43,12 @@ function! s:findMatches()
 endfunction
 
 function! s:searchDotContext()
-	" if context contains a package followed by a dot, do a search on that 
+	" if context contains a package followed by a dot, do a search on that
 	" package
-	
+
 	" TODO Deal with static methods on Final classes.
-	
-	" trim trailing dot 
+
+	" trim trailing dot
 	let package = strpart(s:context, 0, len(s:context) - 1)
 	let mark = match(s:context, '[\.{0,},a-z,A-Z,_,$]\+\.$')
 	let package = 's:' . strpart(package, mark)
@@ -116,14 +116,14 @@ function! s:searchUserDefinedVars(udo)
 	let flags = 'bn'
 
 	" grab the line that contains the object definition
-	let lineNum = search(pattern, flags) 
+	let lineNum = search(pattern, flags)
 	let line = getline(lineNum)
 
 	" now boil it down to the object type
 	"
 	" filtering out everything before...
 	let pattern = pattern . '[a-z,A-Z]'
-	let mark = matchend(line, pattern) - 1 
+	let mark = matchend(line, pattern) - 1
 	let objType = strpart(line, mark)
 	" ...and everything after
 	let mark = matchend(objType, '[^a-z,A-Z,\.{0,}]') - 1
@@ -140,7 +140,7 @@ function! s:searchUserDefinedVars(udo)
 		let matches = s:searchPackage(eval(objType))
 	else
 		let matches = [objType, 'is', 'user-defined?']
-	endif 
+	endif
 
 	return matches
 endfunction
@@ -164,7 +164,7 @@ function! s:getFullyQualifiedName(name)
 				break
 			endif
 		endfor
-		
+
 		if found
 			let fqn = package[0] . '.' . fqn
 			break
@@ -290,7 +290,7 @@ let s:flash = {
 \				'__menuItem__': {
 \					'word': 'noAutoLabeling'
 \				}
-\			}, 
+\			},
 \ 			'shortcut': {
 \				'__menuItem__': {
 \					'word': 'shortcut'
@@ -383,27 +383,27 @@ let s:flash = {
 \			'word': 'display'
 \		},
 \		'IBitmapDrawable': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'IBitmapDrawable'
 \			}
 \		},
 \		'ActionScriptVersion': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'ActionScriptVersion'
 \			}
 \		},
 \		'AVM1Movie': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'AVM1Movie'
 \			}
 \		},
 \		'Bitmap': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'Bitmap'
 \			}
 \		},
 \		'BitmapData': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'BitmapData'
 \			}
 \		},
@@ -413,18 +413,18 @@ let s:flash = {
 \			}
 \		},
 \		'BlendMode': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'BlendMode'
 \			}
 \		},
 \		'CapsStyle': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'CapsStyle'
 \			}
 \		},
 \		'DisplayObject': {
 \			'__inheritance__': 'flash.events.EventDispatcher',
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'DisplayObject'
 \			},
 \			'accessibilityProperties': {
@@ -434,7 +434,7 @@ let s:flash = {
 \			}
 \		},
 \		'DisplayObjectContainer': {
-\			'__menuItem__': { 
+\			'__menuItem__': {
 \				'word': 'DisplayObjectContainer'
 \			}
 \		},
@@ -848,7 +848,7 @@ let s:flash = {
 \	'external': {
 \		'__menuItem__': {
 \			'word': 'external'
-\		}, 
+\		},
 \		'ExternalInterface': {
 \			'__menuItem__': {
 \				'word': 'ExternalInterface'
@@ -858,7 +858,7 @@ let s:flash = {
 \	'filesystem': {
 \		'__menuItem__': {
 \			'word': 'filesystem'
-\		}, 
+\		},
 \		'File': {
 \			'__menuItem__': {
 \				'word': 'File'
@@ -876,7 +876,7 @@ let s:flash = {
 \		}
 \	},
 \	'filters': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'filters'
 \		},
 \		'BevelFilter': {
@@ -946,7 +946,7 @@ let s:flash = {
 \		}
 \	},
 \	'geom': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'geom'
 \		},
 \		'ColorTransform': {
@@ -976,7 +976,7 @@ let s:flash = {
 \		}
 \	},
 \	'html': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'html'
 \		},
 \		'HTMLControl': {
@@ -1011,7 +1011,7 @@ let s:flash = {
 \		}
 \	},
 \	'media': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'media'
 \		},
 \		'Camera': {
@@ -1061,7 +1061,7 @@ let s:flash = {
 \		}
 \	},
 \	'net': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'net'
 \		},
 \		'getClassByAlias': {
@@ -1196,7 +1196,7 @@ let s:flash = {
 \		}
 \	},
 \	'printing': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'printing'
 \		},
 \		'PrintJob': {
@@ -1216,7 +1216,7 @@ let s:flash = {
 \		}
 \	},
 \	'profiler': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'profiler'
 \		},
 \		'showRedrawRegions': {
@@ -1226,7 +1226,7 @@ let s:flash = {
 \		}
 \	},
 \	'system': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'system'
 \		},
 \		'fscommand': {
@@ -1301,7 +1301,7 @@ let s:flash = {
 \		}
 \	},
 \	'text': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'text'
 \		},
 \		'AntiAliasType': {
@@ -1407,7 +1407,7 @@ let s:flash = {
 \		}
 \	},
 \	'ui': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'ui'
 \		},
 \		'ContextMenu': {
@@ -1447,7 +1447,7 @@ let s:flash = {
 \		}
 \	},
 \	'utils': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'utils'
 \		},
 \		'clearInterval': {
@@ -1547,7 +1547,7 @@ let s:flash = {
 \		}
 \	},
 \	'xml': {
-\		'__menuItem__': { 
+\		'__menuItem__': {
 \			'word': 'xml'
 \		},
 \		'XMLDocument': {

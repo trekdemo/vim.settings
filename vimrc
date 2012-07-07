@@ -12,10 +12,6 @@
 filetype off
 
 let g:pathogen_disabled = []
-" Headlights requires at least vim 7.3 and Pyton
-if v:version < '700' || !has('python')
-  call add(g:pathogen_disabled, 'vim-headlights')
-endif
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 set nocompatible                        " I'm using vim not vi
@@ -34,7 +30,7 @@ set nocursorline                        " Do not hightlight the current line
 set scrolloff=5
 set sidescroll=1
 set sidescrolloff=10
-set formatoptions=qrn1
+set formatoptions=qcarn1
 set clipboard+=unnamed                  " Yanks go on clipboard instead.
 set pastetoggle=<F8>
 set novisualbell                        " No blinking .
@@ -43,11 +39,10 @@ set lazyredraw
 set autoread                            " Reload file if it's modified outside
 set autowrite
 set ruler                               " Show line and column number
-set showbreak=↪
+set showbreak=↪\
 set list                                " Show invisible characters
 set listchars=tab:▸\ ,trail:.,eol:¬,extends:❯,precedes:❮
 set fillchars+=diff:⣿
-set cursorline
 set nohidden                            " Modified buffers can be hidden
 set splitright                          " New split window on the right
 set splitbelow                          " New split window on the bottom
@@ -58,14 +53,13 @@ set backspace=indent,eol,start          " Make backspace behave in a sane manner
 set foldenable                          " Use folds"
 set foldmethod=syntax
 set foldlevel=999999
-set foldlevelstart=1
+set foldlevelstart=2
 set title
 set shiftround
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set formatoptions=qrn1
 set laststatus=2
 set notimeout
 set ttimeout
@@ -86,8 +80,8 @@ set noswapfile                          " It's 2012, Vim.
 
 syntax enable                           " Switch syntax highlighting on
 set t_Co=256                            " User 256 colors
-set synmaxcol=300                       " Hightlight only the first 100 chars
-" set background=dark
+set synmaxcol=160                       " Hightlight only the first n chars
+set background=dark
 " colorscheme molokai
 " let g:solarized_termcolors=256
 let g:solarized_underline = 0
@@ -128,9 +122,12 @@ nmap U :syntax sync fromstart<cr>:redraw!<cr>
 inoremap <c-l> <c-x><c-l>
 " File names
 inoremap <c-f> <c-x><c-f>
+" Tags
+inoremap <c-]> <c-x><c-]>
 
 " Pow restart
-map <silent> <leader>pr :!powder restart<cr><cr>
+" map <silent> <leader>pr :!powder restart<cr><cr>
+map <silent> <leader>pr :!touch tmp/restart.txt<cr><cr>
 " Pow open
 map <silent> <leader>po :!powder open<cr><cr>
 
@@ -344,6 +341,7 @@ set foldtext=MyFoldText()
 augroup ft_ruby
     au!
     au Filetype ruby setlocal foldmethod=syntax
+    au Filetype ruby setlocal omnifunc=syntaxcomplete#Complete
 augroup END
 
 " }}}
@@ -414,11 +412,7 @@ augroup END
     au Filetype actionscript setlocal foldmarker={,}
     au FileType actionscript set omnifunc=actionscriptcomplete#Complete
     au FileType actionscript set dictionary=$HOME/.vim/dict/actionscript.dict
-    au FileType actionscript setlocal autoindent
-    au FileType actionscript setlocal expandtab
-    au FileType actionscript setlocal tabstop=2
-    au FileType actionscript setlocal shiftwidth=2
-    au FileType actionscript setlocal softtabstop=2
+    au FileType actionscript setlocal autoindent expandtab tabstop=2 shiftwidth=2 softtabstop=2
   augroup END
 " }}}
 " Javascript {{{
@@ -427,6 +421,10 @@ augroup END
 " }}}
 " CoffeeScript {{{
   au Filetype coffee setlocal foldmethod=indent
+" }}}
+" HTML {{{
+  au Filetype html, eruby setlocal noexpandtab
+  au Filetype html, eruby setlocal listchars=trail:.,eol:¬,extends:❯,precedes:❮
 " }}}
 
 " }}}
@@ -467,6 +465,7 @@ nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e ~/.vimrc<cr>
 nnoremap <leader>eg <C-w>s<C-w>j<C-w>L:e ~/.gitconfig<cr>
 nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
 nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
+nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/bundle/snipmate/snippets/<cr>
 
 " }}}
 " Searching and movement -------------------------------------------------- {{{
@@ -518,7 +517,8 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
       if &ft == 'ruby'
         let paths = "$GEM_HOME $MY_RUBY_HOME"
       elseif &ft == 'actionscript'
-        let paths = "$FLEX_HOME/framework/sources/"
+        " let paths = "$FLEX_HOME/framework/sources/"
+        let paths = '.'
       end
       echo paths;
       :execute ":!ctags -R * ".paths
@@ -632,20 +632,14 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:syntastic_quiet_warnings=0
     let g:syntastic_auto_loc_list=2
   " }}}
-  " Headlights {{{
-    let g:headlights_use_plugin_menu = 0
-    let g:headlights_smart_menus = 1
-    let g:headlights_show_commands = 1
-    let g:headlights_show_mappings = 1
-    let g:headlights_show_abbreviations = 0
-    let g:headlights_show_functions = 0
-    let g:headlights_show_highlights = 0
-    let g:headlights_show_files = 0
-    let g:headlights_show_load_order = 0
-    let g:headlights_debug_mode = 0
-  " }}}
   " Supertab {{{
+    " Disable supertab
     let g:loaded_supertab = 1
+  " }}}
+  " AutoComplPop {{{
+    " Disable plugin
+    let g:loaded_acp = 1
+    let g:acp_behaviorRubyOmniSymbolLength = -1
   " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
