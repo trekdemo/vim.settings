@@ -64,6 +64,7 @@ set laststatus=2
 set notimeout
 set ttimeout
 set timeoutlen=50
+set tags=./tags,tags,gems.tags
 " Backups {{{
 
 " Make Vim able to edit crontab files again.
@@ -410,8 +411,8 @@ augroup END
     au BufNewFile,BufRead *.as setlocal filetype=actionscript
     au Filetype actionscript setlocal foldmethod=marker
     au Filetype actionscript setlocal foldmarker={,}
-    au FileType actionscript set omnifunc=actionscriptcomplete#Complete
-    au FileType actionscript set dictionary=$HOME/.vim/dict/actionscript.dict
+    au FileType actionscript setlocal omnifunc=actionscriptcomplete#Complete
+    au FileType actionscript setlocal dictionary=$HOME/.vim/dict/actionscript.dict
     au FileType actionscript setlocal autoindent expandtab tabstop=2 shiftwidth=2 softtabstop=2
   augroup END
 " }}}
@@ -512,18 +513,9 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " }}}
   " Tagbar {{{
     " Regenerate ctags
-    function! RegenerateCTags()
-      let paths = ""
-      if &ft == 'ruby'
-        let paths = "$GEM_HOME $MY_RUBY_HOME"
-      elseif &ft == 'actionscript'
-        " let paths = "$FLEX_HOME/framework/sources/"
-        let paths = '.'
-      end
-      echo paths;
-      :execute ":!ctags -R * ".paths
-    endfunction
-    map <Leader>rt :call RegenerateCTags()<CR>
+    map <Leader>rct :!ctags -R *<CR>
+    " Regenerate bundler gems ctags
+    map <leader>rcb :!bundler-tags<CR>
     nmap <leader>b :TagbarToggle<CR>
   " }}}
   " Ctrl-P {{{
