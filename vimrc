@@ -126,6 +126,10 @@ inoremap <c-f> <c-x><c-f>
 " Tags
 inoremap <c-]> <c-x><c-]>
 
+" Scroll faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
 " Pow restart
 " map <silent> <leader>pr :!powder restart<cr><cr>
 map <silent> <leader>pr :!touch tmp/restart.txt<cr><cr>
