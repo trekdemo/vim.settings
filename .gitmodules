@@ -85,3 +85,6 @@
 [submodule "bundle/vim-acp"]
 	path = bundle/vim-acp
 	url = https://github.com/vim-scripts/AutoComplPop.git
+[submodule "bundle/vim-ruby-debugger"]
+	path = bundle/vim-ruby-debugger
+	url = https://github.com/astashov/vim-ruby-debugger.git
