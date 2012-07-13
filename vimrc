@@ -127,7 +127,6 @@ inoremap <c-l> <c-x><c-l>
 inoremap <c-f> <c-x><c-f>
 " Tags
 inoremap <c-]> <c-x><c-]>
-imap <Tab> <C-P>
 
 " Scroll faster
 nnoremap <C-e> 3<C-e>
@@ -536,6 +535,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     \ }
   " }}}
   " Ruby-Debugger {{{
+    let g:ruby_debugger_no_maps = 1
     let g:ruby_debugger_progname = 'mvim'
     map <localleader>b  :call g:RubyDebugger.toggle_breakpoint()<CR>
     map <localleader>v  :call g:RubyDebugger.open_variables()<CR>

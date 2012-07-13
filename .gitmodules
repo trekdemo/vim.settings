@@ -16,9 +16,6 @@
 [submodule "bundle/vim-ragtag"]
 	path = bundle/vim-ragtag
 	url = https://github.com/tpope/vim-ragtag.git
-[submodule "bundle/vim-ack"]
-	path = bundle/vim-ack
-	url = https://github.com/mileszs/ack.vim.git
 [submodule "bundle/vim-endwise"]
 	path = bundle/vim-endwise
 	url = https://github.com/tpope/vim-endwise.git
