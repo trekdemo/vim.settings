@@ -30,7 +30,7 @@ set nocursorline                        " Do not hightlight the current line
 set scrolloff=5
 set sidescroll=1
 set sidescrolloff=10
-set formatoptions=qcarn1
+set formatoptions=qcrn1
 set clipboard+=unnamed                  " Yanks go on clipboard instead.
 set pastetoggle=<F8>
 set novisualbell                        " No blinking .
@@ -48,6 +48,8 @@ set splitright                          " New split window on the right
 set splitbelow                          " New split window on the bottom
 set virtualedit+=block
 set completeopt=longest,menuone,preview " Better Completion
+" set complete=.,w,b,u,t,i
+set complete=.,b,u,t
 set diffopt+=iwhite                     " Ignore whitespace on diffs
 set backspace=indent,eol,start          " Make backspace behave in a sane manner.
 set foldenable                          " Use folds"
@@ -125,6 +127,7 @@ inoremap <c-l> <c-x><c-l>
 inoremap <c-f> <c-x><c-f>
 " Tags
 inoremap <c-]> <c-x><c-]>
+imap <Tab> <C-P>
 
 " Scroll faster
 nnoremap <C-e> 3<C-e>
@@ -346,7 +349,6 @@ set foldtext=MyFoldText()
 augroup ft_ruby
     au!
     au Filetype ruby setlocal foldmethod=syntax
-    au Filetype ruby setlocal omnifunc=syntaxcomplete#Complete
 augroup END
 
 " }}}
@@ -622,16 +624,12 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " }}}
   " ACK {{{
     map <D-F> :Ack<space>
+    map <leader>F :Ack<space>
   " }}}
   " Syntastic {{{
     let g:syntastic_enable_signs=1
     let g:syntastic_quiet_warnings=0
     let g:syntastic_auto_loc_list=2
-  " }}}
-  " AutoComplPop {{{
-    " Disable plugin
-    let g:loaded_acp = 1
-    let g:acp_behaviorRubyOmniSymbolLength = -1
   " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
