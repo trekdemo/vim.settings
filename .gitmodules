@@ -85,3 +85,6 @@
 [submodule "bundle/vim-ack"]
 	path = bundle/vim-ack
 	url = https://github.com/mileszs/ack.vim.git
+[submodule "bundle/textobj-word-column"]
+	path = bundle/textobj-word-column
+	url = https://github.com/coderifous/textobj-word-column.vim.git

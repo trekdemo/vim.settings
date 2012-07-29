@@ -83,7 +83,7 @@ set noswapfile                          " It's 2012, Vim.
 
 syntax enable                           " Switch syntax highlighting on
 set t_Co=256                            " User 256 colors
-set synmaxcol=160                       " Hightlight only the first n chars
+set synmaxcol=240                       " Hightlight only the first n chars
 set background=dark
 " colorscheme molokai
 " let g:solarized_termcolors=256
@@ -108,6 +108,7 @@ endif
 
 let mapleader = ","
 let maplocalleader = "\\"
+nmap <leader><leader> :!
 
 " }}}
 " Refactoring {{{
@@ -167,8 +168,6 @@ map <tab> %
 
 " GUndo
 nmap <silent> <leader>u :GundoToggle<CR>
-" Ruby hashrocket
-imap hh =>
 
 " Formatting, TextMate-style
 nnoremap Q gqip
@@ -347,6 +346,7 @@ set foldtext=MyFoldText()
 
 augroup ft_ruby
     au!
+    au Filetype ruby iab hh =>
     au Filetype ruby setlocal foldmethod=syntax
 augroup END
 
@@ -429,8 +429,7 @@ augroup END
   au Filetype coffee setlocal foldmethod=indent
 " }}}
 " HTML {{{
-  au Filetype html, eruby setlocal noexpandtab
-  au Filetype html, eruby setlocal listchars=trail:.,eol:¬,extends:❯,precedes:❮
+  au Filetype html,eruby setlocal noexpandtab
 " }}}
 
 " }}}
@@ -537,16 +536,16 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " Ruby-Debugger {{{
     let g:ruby_debugger_no_maps = 1
     let g:ruby_debugger_progname = 'mvim'
-    map <localleader>b  :call g:RubyDebugger.toggle_breakpoint()<CR>
-    map <localleader>v  :call g:RubyDebugger.open_variables()<CR>
-    map <localleader>m  :call g:RubyDebugger.open_breakpoints()<CR>
-    map <localleader>t  :call g:RubyDebugger.open_frames()<CR>
-    map <localleader>s  :call g:RubyDebugger.step()<CR>
-    map <localleader>f  :call g:RubyDebugger.finish()<CR>
-    map <localleader>n  :call g:RubyDebugger.next()<CR>
-    map <localleader>c  :call g:RubyDebugger.continue()<CR>
-    map <localleader>e  :call g:RubyDebugger.exit()<CR>
-    map <localleader>d  :call g:RubyDebugger.remove_breakpoints()<CR>
+    nmap <localleader>b  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.toggle_breakpoint()<CR>
+    nmap <localleader>v  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.open_variables()<CR>
+    nmap <localleader>m  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.open_breakpoints()<CR>
+    nmap <localleader>t  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.open_frames()<CR>
+    nmap <localleader>s  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.step()<CR>
+    nmap <localleader>f  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.finish()<CR>
+    nmap <localleader>n  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.next()<CR>
+    nmap <localleader>c  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.continue()<CR>
+    nmap <localleader>e  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.exit()<CR>
+    nmap <localleader>d  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.remove_breakpoints()<CR>
   " }}}
   " JSHint {{{
     let g:JSLintHighlightErrorLine = 1 " Turn on jshint errors by default
@@ -599,7 +598,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     nnoremap <leader>gr :Gremove<cr>
     nnoremap <leader>gl :Shell git lg -25<cr>:wincmd \|<cr>
     nnoremap <leader>gx :Git dx<cr>
-    nnoremap <leader>gt :Git dt<cr>
+    nnoremap <silent> <leader>gt :Git dt<cr>
 
     augroup ft_fugitive
         au!
