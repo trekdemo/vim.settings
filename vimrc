@@ -39,7 +39,7 @@ set lazyredraw
 set autoread                            " Reload file if it's modified outside
 set autowrite
 set ruler                               " Show line and column number
-set showbreak=↪\
+set showbreak=↪
 set list                                " Show invisible characters
 set listchars=tab:▸\ ,trail:.,eol:¬,extends:❯,precedes:❮
 set fillchars+=diff:⣿
@@ -186,6 +186,10 @@ nnoremap <C-l> <C-w>l
 " Window resizing
 nnoremap <S-C-left> 5<c-w>>
 nnoremap <S-C-right> 5<c-w><
+nnoremap <S-C-up> 5<c-w>+
+nnoremap <S-C-down> 5<c-w>-
+" Adjust viewports to the same size
+map <Leader>= <C-w>=
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
 nnoremap n nzzzv
@@ -222,8 +226,6 @@ map <leader>et :tabe %%
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
-" Adjust viewports to the same size
-map <Leader>= <C-w>=
 " Toggle NERDTree
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
@@ -429,7 +431,10 @@ augroup END
   au Filetype coffee setlocal foldmethod=indent
 " }}}
 " HTML {{{
-  au Filetype html,eruby setlocal noexpandtab
+  augroup ft_html
+    au!
+    au Filetype html,eruby,erb set noexpandtab
+  augroup END
 " }}}
 
 " }}}
@@ -586,6 +591,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " }}}
   " Fugitive {{{
 
+    cabbrev git Git
     nnoremap <leader>gd :Gdiff<cr>
     nnoremap <leader>gp :Git push<cr>
     nnoremap <leader>gs :Gstatus<cr>
@@ -629,6 +635,12 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:syntastic_enable_signs=1
     let g:syntastic_quiet_warnings=0
     let g:syntastic_auto_loc_list=2
+  " }}}
+  " GitV {{{
+    let g:Gitv_DoNotMapCtrlKey = 1
+    nmap <leader>gv :Gitv --all<cr>
+    nmap <leader>gV :Gitv! --all<cr>
+    vmap <leader>gV :Gitv! --all<cr>
   " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
