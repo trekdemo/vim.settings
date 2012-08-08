@@ -638,9 +638,14 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " }}}
   " GitV {{{
     let g:Gitv_DoNotMapCtrlKey = 1
+    let g:Gitv_OpenHorizontal = 1
     nmap <leader>gv :Gitv --all<cr>
     nmap <leader>gV :Gitv! --all<cr>
     vmap <leader>gV :Gitv! --all<cr>
+  " }}}
+  " Rails {{{
+    cabbrev rake Rake
+    cabbrev bundle Bundle
   " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
