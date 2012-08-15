@@ -433,8 +433,17 @@ augroup END
 " HTML {{{
   augroup ft_html
     au!
-    au Filetype html,eruby,erb set noexpandtab
+    " au Filetype html,eruby,erb set noexpandtab
   augroup END
+" }}}
+" YAML {{{
+
+" augroup ft_yaml
+    " au!
+    " au Filetype yaml setlocal foldlevelstart=999
+    " au Filetype yaml setlocal foldmethod=indent
+" augroup END
+
 " }}}
 
 " }}}
@@ -645,6 +654,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   " }}}
   " Rails {{{
     cabbrev rake Rake
+    cabbrev rails Rails
     cabbrev bundle Bundle
   " }}}
 " }}}
