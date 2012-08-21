@@ -43,7 +43,7 @@ set showbreak=↪
 set list                                " Show invisible characters
 set listchars=tab:▸\ ,trail:.,eol:¬,extends:❯,precedes:❮
 set fillchars+=diff:⣿
-set nohidden                            " Modified buffers can be hidden
+set nohidden                            " Modified buffers can't be hidden
 set splitright                          " New split window on the right
 set splitbelow                          " New split window on the bottom
 set virtualedit+=block
@@ -342,6 +342,14 @@ function! MyFoldText() " {{{
 endfunction " }}}
 set foldtext=MyFoldText()
 " }}}
+" OmniComplete ------------------------------------------------------------ {{{
+    if has("autocmd") && exists("+omnifunc")
+        autocmd Filetype *
+            \if &omnifunc == "" |
+            \setlocal omnifunc=syntaxcomplete#Complete |
+            \endif
+    endif
+" }}}
 " Various filetype-specific stuff ----------------------------------------- {{{
 
 " Ruby {{{
@@ -350,6 +358,7 @@ augroup ft_ruby
     au!
     au Filetype ruby iab hh =>
     au Filetype ruby setlocal foldmethod=syntax
+    " au FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
 " }}}
