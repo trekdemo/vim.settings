@@ -539,11 +539,26 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:Powerline_symbols = 'fancy'
   " }}}
   " Tagbar {{{
+
+    let g:tagbar_type_coffee = {
+          \ 'ctagsbin' : 'ctags',
+          \ 'ctagsargs' : '',
+          \ 'kinds' : [
+          \ 'f:functions',
+          \ 'v:variable',
+          \ ],
+          \ 'sro' : ".",
+          \ 'kind2scope' : {
+          \ 'f' : 'object',
+          \ 'v' : 'object',
+          \ }
+        \ }
     " Regenerate ctags
     map <Leader>rct :!ctags -R *<CR>
     " Regenerate bundler gems ctags
     map <leader>rcb :!bundler-tags<CR>
     nmap <leader>b :TagbarToggle<CR>
+
   " }}}
   " Ctrl-P {{{
     let g:ctrlp_root_markers = ['.rvmrc', '.git']
