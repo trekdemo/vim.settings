@@ -85,11 +85,12 @@ syntax enable                           " Switch syntax highlighting on
 set t_Co=256                            " User 256 colors
 set synmaxcol=240                       " Hightlight only the first n chars
 set background=dark
+colorscheme Tomorrow-Night
 " colorscheme molokai
 " let g:solarized_termcolors=256
-let g:solarized_underline = 0
-let g:solarized_termtrans = 1
-colorscheme solarized
+" let g:solarized_underline = 0
+" let g:solarized_termtrans = 1
+" colorscheme solarized
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
