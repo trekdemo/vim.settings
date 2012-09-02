@@ -97,3 +97,6 @@
 [submodule "bundle/vim-tomorrow-theme"]
 	path = bundle/vim-tomorrow-theme
 	url = https://github.com/chriskempson/vim-tomorrow-theme
+[submodule "bundle/vim-linediff"]
+	path = bundle/vim-linediff
+	url = https://github.com/AndrewRadev/linediff.vim.git

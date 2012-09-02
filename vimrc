@@ -42,7 +42,7 @@ set ruler                               " Show line and column number
 set showbreak=↪
 set list                                " Show invisible characters
 set listchars=tab:▸\ ,trail:.,eol:¬,extends:❯,precedes:❮
-set fillchars+=diff:⣿
+set fillchars+=diff:⣿,vert:│
 set nohidden                            " Modified buffers can't be hidden
 set splitright                          " New split window on the right
 set splitbelow                          " New split window on the bottom
@@ -85,9 +85,9 @@ syntax enable                           " Switch syntax highlighting on
 set t_Co=256                            " User 256 colors
 set synmaxcol=240                       " Hightlight only the first n chars
 set background=dark
-colorscheme Tomorrow-Night
+colorscheme hybrid
 " colorscheme molokai
-" let g:solarized_termcolors=256
+let g:solarized_termcolors=256
 " let g:solarized_underline = 0
 " let g:solarized_termtrans = 1
 " colorscheme solarized
@@ -165,7 +165,7 @@ vnoremap k gk
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 
-map <tab> %
+" map <tab> %
 
 " GUndo
 nmap <silent> <leader>u :GundoToggle<CR>
@@ -337,9 +337,9 @@ function! MyFoldText() " {{{
     let onetab = strpart('          ', 0, &tabstop)
     let line = substitute(line, '\t', onetab, 'g')
 
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let line = strpart(line, 0, windowwidth - 7 -len(foldedlinecount))
     let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . ' '
 endfunction " }}}
 set foldtext=MyFoldText()
 " }}}
@@ -359,7 +359,12 @@ augroup ft_ruby
     au!
     au Filetype ruby iab hh =>
     au Filetype ruby setlocal foldmethod=syntax
-    " au FileType ruby setlocal omnifunc=rubycomplete#Complete
+    au FileType ruby,eruby set omnifunc=rubycomplete#Complete
+    au FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+    au FileType ruby,eruby let g:rubycomplete_rails = 1
+    au FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+    "improve autocomplete menu color
+    highlight Pmenu ctermbg=238 gui=bold
 augroup END
 
 " }}}
@@ -425,6 +430,7 @@ augroup END
 " }}}
 " ActionScript {{{
   augroup ft_actionscript
+    au!
     au BufNewFile,BufRead *.as setlocal filetype=actionscript
     au Filetype actionscript setlocal foldmethod=marker
     au Filetype actionscript setlocal foldmarker={,}
@@ -434,10 +440,12 @@ augroup END
   augroup END
 " }}}
 " Javascript {{{
+" au!
   au Filetype javascript setlocal foldmethod=marker
   au Filetype javascript setlocal foldmarker={,}
 " }}}
 " CoffeeScript {{{
+" au!
   au Filetype coffee setlocal foldmethod=indent
 " }}}
 " HTML {{{
@@ -492,7 +500,6 @@ augroup END
 
 nnoremap <leader>ev <C-w>s<C-w>j<C-w>L:e ~/.vimrc<cr>
 nnoremap <leader>eg <C-w>s<C-w>j<C-w>L:e ~/.gitconfig<cr>
-nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
 nnoremap <leader>ez <C-w>s<C-w>j<C-w>L:e ~/.zshrc<cr>
 nnoremap <leader>es <C-w>s<C-w>j<C-w>L:e ~/.vim/bundle/snipmate/snippets/<cr>
 
@@ -688,7 +695,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 if has('gui_running') " {{{
   set guifont=Inconsolata-dz\ for\ Powerline:h12
   " set guifont=Menlo\ Regular\ for\ Powerline:h12
-  set linespace=1
+  " set linespace=1
 
   " Remove all the UI cruft
   set go-=T
@@ -699,8 +706,6 @@ if has('gui_running') " {{{
 
   highlight SpellBad term=underline gui=undercurl guisp=Orange
 
-  " Use a line-drawing char for pretty vertical splits.
-  set fillchars+=vert:│
 
   " Different cursors for different modes.
   set guicursor=n-c:block-Cursor-blinkon0
