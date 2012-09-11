@@ -67,17 +67,17 @@ set notimeout
 set ttimeout
 set timeoutlen=50
 set tags=./tags,tags,gems.tags
-" Backups {{{
+  " Backups {{{
 
-" Make Vim able to edit crontab files again.
-set backupskip=/tmp/*,/private/tmp/*"
-set undodir=~/.vim/tmp/undo//           " undo files
-set backupdir=~/.vim/tmp/backup//       " backups
-set directory=~/.vim/tmp/swap//         " swap files
-set backup                              " enable backups
-set noswapfile                          " It's 2012, Vim.
+  " Make Vim able to edit crontab files again.
+  set backupskip=/tmp/*,/private/tmp/*"
+  set undodir=~/.vim/tmp/undo//           " undo files
+  set backupdir=~/.vim/tmp/backup//       " backups
+  set directory=~/.vim/tmp/swap//         " swap files
+  set backup                              " enable backups
+  set noswapfile                          " It's 2012, Vim.
 
-" }}}
+  " }}}
 " }}}
 " Color scheme ------------------------------------------------------------ {{{
 
@@ -112,12 +112,6 @@ let maplocalleader = "\\"
 nmap <leader><leader> :!
 
 " }}}
-" Refactoring {{{
-  " For local replace
-  nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
-  " For global replace
-  nnoremap gR gD:%s/<C-R>///gc<left><left><left>
-" }}}
 
 " Unfuck my screen
 nmap U :syntax sync fromstart<cr>:redraw!<cr>
@@ -134,10 +128,8 @@ inoremap <c-]> <c-x><c-]>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" Pow restart
-" map <silent> <leader>pr :!powder restart<cr><cr>
+" Pow restart/open
 map <silent> <leader>pr :!touch tmp/restart.txt<cr><cr>
-" Pow open
 map <silent> <leader>po :!powder open<cr><cr>
 
 " Change case
@@ -204,14 +196,6 @@ nnoremap g, g,zz
 " Easier to type, and I never use the default behavior.
 noremap H ^
 noremap L g_
-
-" Align text
-nnoremap <leader>Al :left<cr>
-nnoremap <leader>Ac :center<cr>
-nnoremap <leader>Ar :right<cr>
-vnoremap <leader>Al :left<cr>
-vnoremap <leader>Ac :center<cr>
-vnoremap <leader>Ar :right<cr>
 
 " Toggle wrap settings
 nmap <silent> <leader>tw :set invwrap<CR>:set wrap?<CR>
@@ -360,6 +344,7 @@ augroup ft_ruby
     au Filetype ruby iab hh =>
     au Filetype ruby setlocal foldmethod=syntax
     au FileType ruby,eruby set omnifunc=rubycomplete#Complete
+    " au FileType ruby,eruby set omnifunc=syntaxcomplete#Complete
     au FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
     au FileType ruby,eruby let g:rubycomplete_rails = 1
     au FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
@@ -451,17 +436,8 @@ augroup END
 " HTML {{{
   augroup ft_html
     au!
-    " au Filetype html,eruby,erb set noexpandtab
+    au Filetype html,eruby,erb set noet
   augroup END
-" }}}
-" YAML {{{
-
-" augroup ft_yaml
-    " au!
-    " au Filetype yaml setlocal foldlevelstart=999
-    " au Filetype yaml setlocal foldmethod=indent
-" augroup END
-
 " }}}
 
 " }}}
@@ -533,16 +509,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 
 " }}}
 " Plugin settings --------------------------------------------------------- {{{
-  " NERDTree {{{
-    au Filetype nerdtree setlocal nolist
-
-    let NERDTreeHighlightCursorline=1
-    let NERDTreeIgnore = ['.vim$', '\~$', '.*.pid', '.*-fixtures-.*.json', '.*\.o$', 'db.db', 'tags.bak']
-    let NERDTreeMinimalUI = 1
-    let NERDTreeDirArrows = 1
-    let g:nerdtree_tabs_open_on_gui_startup = 0
-    let g:nerdtree_tabs_open_on_console_startup = 0
-  " }}}
   " Powerline {{{
     let g:Powerline_symbols = 'fancy'
   " }}}
@@ -578,23 +544,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
       \ 'file': '\.exe$\|\.so$\|\.dll$',
       \ 'link': 'some_bad_symbolic_link',
     \ }
-  " }}}
-  " Ruby-Debugger {{{
-    let g:ruby_debugger_no_maps = 1
-    let g:ruby_debugger_progname = 'mvim'
-    nmap <localleader>b  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.toggle_breakpoint()<CR>
-    nmap <localleader>v  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.open_variables()<CR>
-    nmap <localleader>m  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.open_breakpoints()<CR>
-    nmap <localleader>t  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.open_frames()<CR>
-    nmap <localleader>s  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.step()<CR>
-    nmap <localleader>f  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.finish()<CR>
-    nmap <localleader>n  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.next()<CR>
-    nmap <localleader>c  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.continue()<CR>
-    nmap <localleader>e  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.exit()<CR>
-    nmap <localleader>d  :call ruby_debugger#load_debugger() <bar> call g:RubyDebugger.remove_breakpoints()<CR>
-  " }}}
-  " JSHint {{{
-    let g:JSLintHighlightErrorLine = 1 " Turn on jshint errors by default
   " }}}
   " Easymotion {{{
 
@@ -669,13 +618,8 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
   endif
   " }}}
   " ACK {{{
-    map <D-F> :Ack<space>
-    map <leader>F :Ack<space>
-  " }}}
-  " Syntastic {{{
-    let g:syntastic_enable_signs=1
-    let g:syntastic_quiet_warnings=0
-    let g:syntastic_auto_loc_list=2
+    map <D-F> :Ack!<space>
+    map <leader>F :Ack!<space>
   " }}}
   " GitV {{{
     let g:Gitv_DoNotMapCtrlKey = 1
