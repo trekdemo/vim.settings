@@ -211,10 +211,6 @@ map <leader>et :tabe %%
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
-" Toggle NERDTree
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
-
-
 if has("gui_macvim") && has("gui_running")
   " Map command-[ and command-] to indenting or outdenting
   " while keeping the original selection in visual mode
