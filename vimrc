@@ -637,28 +637,6 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     cabbrev rails Rails
     cabbrev bundle Bundle
   " }}}
-  " ACP {{{
-    " Remove default ruby behavior and use tags complettition instead of omnicomplete
-    let g:acp_behavior = { 'ruby': [
-      \ { 'meets': 'acp#meetsForSnipmate',
-      \   'completefunc': 'acp#completeSnipmate',
-      \   'onPopupClose': 'acp#onPopupCloseSnipmate',
-      \   'repeat': 0,
-      \   'command': "\<C-x>\<C-u>"},
-      \ { 'meets': 'acp#meetsForKeyword',
-      \   'repeat': 0,
-      \   'command': "\<C-n>"},
-      \ { 'meets': 'acp#meetsForFile',
-      \   'repeat': 1,
-      \   'command': "\<C-x>\<C-f>" }]}
-      " \ { 'meets': 'acp#meetsForRubyOmni',
-      " \   'repeat': 1,
-      " \   'command': "\<C-x>\<C-t>" }
-      " \ ]}
-      " \ { 'meets': 'acp#meetsForRubyOmni',
-      " \   'repeat': 0,
-      " \   'command': "\<C-x>\<C-o>"}
-  " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
 
