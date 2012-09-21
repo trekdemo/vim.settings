@@ -41,7 +41,7 @@ set autowrite
 set ruler                               " Show line and column number
 set showbreak=↪
 set list                                " Show invisible characters
-set listchars=tab:▸\ ,trail:.,eol:¬,extends:❯,precedes:❮
+set listchars=tab:·\ ,trail:·,eol:¬,extends:❯,precedes:❮
 set fillchars+=diff:⣿,vert:│
 set nohidden                            " Modified buffers can't be hidden
 set splitright                          " New split window on the right
@@ -435,6 +435,12 @@ augroup END
     au Filetype html,eruby,erb set noet
   augroup END
 " }}}
+" TaskPaper {{{
+  augroup ft_task_paper
+    au!
+    au Filetype taskpaper set noet
+  augroup END
+" }}}
 
 " }}}
 " Autocommands ------------------------------------------------------------ {{{
@@ -536,10 +542,12 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:ctrlp_max_height = 20
     let g:ctrlp_extensions = ['tag']
     let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$\|tmp',
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
       \ 'file': '\.exe$\|\.so$\|\.dll$',
       \ 'link': 'some_bad_symbolic_link',
     \ }
+    let g:ctrlp_user_command =
+      \ ['.git', 'cd %s && git ls-files . -co --exclude-standard']
   " }}}
   " Easymotion {{{
 
@@ -628,6 +636,28 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     cabbrev rake Rake
     cabbrev rails Rails
     cabbrev bundle Bundle
+  " }}}
+  " ACP {{{
+    " Remove default ruby behavior and use tags complettition instead of omnicomplete
+    let g:acp_behavior = { 'ruby': [
+      \ { 'meets': 'acp#meetsForSnipmate',
+      \   'completefunc': 'acp#completeSnipmate',
+      \   'onPopupClose': 'acp#onPopupCloseSnipmate',
+      \   'repeat': 0,
+      \   'command': "\<C-x>\<C-u>"},
+      \ { 'meets': 'acp#meetsForKeyword',
+      \   'repeat': 0,
+      \   'command': "\<C-n>"},
+      \ { 'meets': 'acp#meetsForFile',
+      \   'repeat': 1,
+      \   'command': "\<C-x>\<C-f>" }]}
+      " \ { 'meets': 'acp#meetsForRubyOmni',
+      " \   'repeat': 1,
+      " \   'command': "\<C-x>\<C-t>" }
+      " \ ]}
+      " \ { 'meets': 'acp#meetsForRubyOmni',
+      " \   'repeat': 0,
+      " \   'command': "\<C-x>\<C-o>"}
   " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{

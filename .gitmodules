@@ -82,3 +82,6 @@
 [submodule "bundle/taskpaper"]
 	path = bundle/taskpaper
 	url = https://github.com/davidoc/taskpaper.vim.git
+[submodule "bundle/acp"]
+	path = bundle/acp
+	url = https://github.com/vim-scripts/AutoComplPop.git
