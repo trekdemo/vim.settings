@@ -637,6 +637,11 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     cabbrev rails Rails
     cabbrev bundle Bundle
   " }}}
+  " Turbux {{{
+    let g:no_turbux_mappings = 1
+    map <leader>rt <Plug>SendTestToTmux
+    map <leader>rT <Plug>SendFocusedTestToTmux
+  " }}}
 " }}}
 " Environments (GUI/Console) ---------------------------------------------- {{{
 
