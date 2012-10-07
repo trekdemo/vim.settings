@@ -168,7 +168,7 @@ vnoremap Q gq
 
 " Easier linewise reselection
 nnoremap <leader>v V`]
-inoremap jj <ESC>
+" inoremap jj <ESC>
 " Swap windows
 nnoremap <leader>w <C-w>v<C-w>l
 " Move between windows
@@ -455,8 +455,12 @@ augroup END
   " Resize splits when the window is resized
   au VimResized * :wincmd =
   au BufRead,BufNewFile {Guardfile} set ft=ruby
-  " Make sure Vim returns to the same line when you reopen a file.
 
+  " Show cursorline only in the active window
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter * set cursorline
+
+  " Make sure Vim returns to the same line when you reopen a file.
   " Thanks, Amit {{{
   augroup line_return
       au!
@@ -702,6 +706,7 @@ if has('gui_running') " {{{
   end " }}}
 else
   " Console Vim
+  set mouse=a
 endif " }}}
 
 " }}}
