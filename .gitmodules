@@ -88,3 +88,6 @@
 [submodule "bundle/vim-turbux"]
 	path = bundle/vim-turbux
 	url = https://github.com/jgdavey/vim-turbux.git
+[submodule "bundle/rename"]
+	path = bundle/rename
+	url = https://github.com/danro/rename.vim
