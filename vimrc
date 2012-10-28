@@ -431,6 +431,9 @@ augroup END
   au Filetype javascript setlocal foldmethod=marker
   au Filetype javascript setlocal foldmarker={,}
 " }}}
+" Java {{{
+  autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+" }}}
 " CoffeeScript {{{
 " au!
   au Filetype coffee setlocal foldmethod=indent
