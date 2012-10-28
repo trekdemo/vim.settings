@@ -550,7 +550,9 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     let g:ctrlp_root_markers = ['.rvmrc', '.git']
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_max_height = 20
-    let g:ctrlp_extensions = ['tag']
+		" let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+    "                         \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+    let g:ctrlp_extensions = ['tag', 'buffertag']
     let g:ctrlp_custom_ignore = {
       \ 'dir':  '\.git$\|\.hg$\|\.svn$',
       \ 'file': '\.exe$\|\.so$\|\.dll$',
