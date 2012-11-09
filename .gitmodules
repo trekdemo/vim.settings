@@ -82,15 +82,12 @@
 [submodule "bundle/taskpaper"]
 	path = bundle/taskpaper
 	url = https://github.com/davidoc/taskpaper.vim.git
-[submodule "bundle/vimux"]
-	path = bundle/vimux
-	url = https://github.com/benmills/vimux.git
-[submodule "bundle/vim-turbux"]
-	path = bundle/vim-turbux
-	url = https://github.com/jgdavey/vim-turbux.git
 [submodule "bundle/rename"]
 	path = bundle/rename
 	url = https://github.com/danro/rename.vim
 [submodule "bundle/javacomplete"]
 	path = bundle/javacomplete
 	url = https://github.com/vim-scripts/javacomplete.git
+[submodule "bundle/splice"]
+	path = bundle/splice
+	url = https://github.com/sjl/splice.vim.git
