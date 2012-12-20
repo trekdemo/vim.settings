@@ -512,7 +512,7 @@ set gdefault
 " Wildmenu completion ----------------------------------------------------- {{{
 
 set wildmenu
-set wildmode=list:longest
+set wildmode=full
 
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.spl                            " compiled spelling word lists
