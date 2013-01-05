@@ -168,7 +168,6 @@ vnoremap Q gq
 
 " Easier linewise reselection
 nnoremap <leader>v V`]
-" inoremap jj <ESC>
 " Swap windows
 nnoremap <leader>w <C-w>v<C-w>l
 " Move between windows
