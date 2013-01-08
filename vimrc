@@ -157,7 +157,6 @@ vnoremap k gk
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 
-" map <tab> %
 
 " GUndo
 nmap <silent> <leader>u :GundoToggle<CR>
@@ -209,6 +208,7 @@ map <leader>et :tabe %%
 
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
+" unimpaired has [n ]n
 
 if has("gui_macvim") && has("gui_running")
   " Map command-[ and command-] to indenting or outdenting
@@ -351,6 +351,12 @@ augroup ft_ruby
     au FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
     "improve autocomplete menu color
     highlight Pmenu ctermbg=238 gui=bold
+
+
+    au Filetype ruby map <Leader>t :call RunCurrentSpecFile()<CR>
+    au Filetype ruby map <Leader>s :call RunNearestSpec()<CR>
+    au Filetype ruby map <Leader>l :call RunLastSpec()<CR>
+
 augroup END
 
 " }}}
@@ -370,6 +376,15 @@ augroup END
 augroup ft_quickfix
     au!
     au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
+    au Filetype qf nnoremap <silent> <buffer> q :ccl<CR>
+    au Filetype qf nnoremap <silent> <buffer> t <C-W><CR><C-W>T
+    au Filetype qf nnoremap <silent> <buffer> T <C-W><CR><C-W>TgT<C-W><C-W>
+    au Filetype qf nnoremap <silent> <buffer> o <CR>
+    au Filetype qf nnoremap <silent> <buffer> go <CR><C-W><C-W>
+    au Filetype qf nnoremap <silent> <buffer> h <C-W><CR><C-W>K
+    au Filetype qf nnoremap <silent> <buffer> H <C-W><CR><C-W>K<C-W>b
+    au Filetype qf nnoremap <silent> <buffer> v <C-W><CR><C-W>H<C-W>b<C-W>J<C-W>t
+    au Filetype qf nnoremap <silent> <buffer> gv <C-W><CR><C-W>H<C-W>b<C-W>J
 augroup END
 
 " }}}
@@ -427,8 +442,7 @@ augroup END
 " }}}
 " Javascript {{{
 " au!
-  au Filetype javascript setlocal foldmethod=marker
-  au Filetype javascript setlocal foldmarker={,}
+  au Filetype javascript setlocal foldmethod=marker foldmarker={,}
 " }}}
 " Java {{{
   autocmd Filetype java setlocal omnifunc=javacomplete#Complete
@@ -440,7 +454,7 @@ augroup END
 " HTML {{{
   augroup ft_html
     au!
-    au Filetype html,eruby,erb set noet
+    au Filetype html,eruby,erb set ts=2 sts=2 sw=3 noet
   augroup END
 " }}}
 " TaskPaper {{{
@@ -507,6 +521,11 @@ set showmatch
 set hlsearch
 set gdefault
 
+" Use Ack instead of Grep when available
+if executable("ack")
+  set grepprg=ack\ -H\ --nogroup\ --nocolor
+endif
+
 " }}}
 " Wildmenu completion ----------------------------------------------------- {{{
 
@@ -542,9 +561,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
           \ }
         \ }
     " Regenerate ctags
-    map <Leader>rct :!ctags -R *<CR>
-    " Regenerate bundler gems ctags
-    map <leader>rcb :!bundler-tags<CR>
+    map <Leader>ct :!ctags -R *<CR>
     nmap <leader>b :TagbarToggle<CR>
 
   " }}}
@@ -617,10 +634,10 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     augroup ft_fugitive
         au!
 
-        au BufNewFile,BufRead .git/index setlocal nolist
+        au BufNewFile,BufRead .git/index setlocal nolist spell
     augroup END
 
-    " "Hub"
+    " Hub
     nnoremap <leader>H :Gbrowse<cr>
     vnoremap <leader>H :Gbrowse<cr>
 
@@ -650,6 +667,41 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     cabbrev rake Rake
     cabbrev rails Rails
     cabbrev bundle Bundle
+
+    " rspec mappings
+    function! RunCurrentSpecFile()
+      if InSpecFile()
+        let l:command = "s " . @% . " -f documentation"
+        call SetLastSpecCommand(l:command)
+        call RunSpecs(l:command)
+      endif
+    endfunction
+
+    function! RunNearestSpec()
+      if InSpecFile()
+        let l:command = "s " . @% . " -l " . line(".") . " -f documentation"
+        call SetLastSpecCommand(l:command)
+        call RunSpecs(l:command)
+      endif
+    endfunction
+
+    function! RunLastSpec()
+      if exists("t:last_spec_command")
+        call RunSpecs(t:last_spec_command)
+      endif
+    endfunction
+
+    function! InSpecFile()
+      return match(expand("%"), "_spec.rb$") != -1
+    endfunction
+
+    function! SetLastSpecCommand(command)
+      let t:last_spec_command = a:command
+    endfunction
+
+    function! RunSpecs(command)
+      execute ":w\|!clear && echo " . a:command . " && echo && " . a:command
+    endfunction
   " }}}
   " Turbux {{{
     let g:no_turbux_mappings = 1
