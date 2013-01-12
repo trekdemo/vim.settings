@@ -18,6 +18,7 @@ set nocompatible                        " I'm using vim not vi
 
 " }}}
 " Basic options ----------------------------------------------------------- {{{
+let g:ruby_path = system('echo $HOME/.rbenv/shims')
 set encoding=utf-8
 set shell=/bin/zsh
 set nowrap                              " Do not wrap long lines
@@ -66,7 +67,7 @@ set laststatus=2
 set notimeout
 set ttimeout
 set timeoutlen=50
-set tags=./tags,tags,gems.tags
+set tags=./.tags,.tags
   " Backups {{{
 
   " Make Vim able to edit crontab files again.
@@ -353,7 +354,7 @@ augroup ft_ruby
     highlight Pmenu ctermbg=238 gui=bold
 
 
-    au Filetype ruby map <Leader>t :call RunCurrentSpecFile()<CR>
+    au Filetype ruby map <Leader>ts :call RunCurrentSpecFile()<CR>
     au Filetype ruby map <Leader>s :call RunNearestSpec()<CR>
     au Filetype ruby map <Leader>l :call RunLastSpec()<CR>
 
@@ -561,7 +562,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
           \ }
         \ }
     " Regenerate ctags
-    map <Leader>ct :!ctags -R *<CR>
+    map <Leader>ct :!ctags -R -f .tags *<CR>
     nmap <leader>b :TagbarToggle<CR>
 
   " }}}
