@@ -40,9 +40,6 @@
 [submodule "bundle/vim-repeat"]
 	path = bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "bundle/vim-colors-solarized"]
-	path = bundle/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "bundle/vim-gundo"]
 	path = bundle/vim-gundo
 	url = https://github.com/sjl/gundo.vim.git
@@ -61,9 +58,6 @@
 [submodule "bundle/vim-ack"]
 	path = bundle/vim-ack
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "bundle/textobj-word-column"]
-	path = bundle/textobj-word-column
-	url = https://github.com/coderifous/textobj-word-column.vim.git
 [submodule "bundle/gitv"]
 	path = bundle/gitv
 	url = https://github.com/gregsexton/gitv.git
@@ -79,21 +73,12 @@
 [submodule "bundle/vim-ruby"]
 	path = bundle/vim-ruby
 	url = https://github.com/vim-ruby/vim-ruby.git
-[submodule "bundle/taskpaper"]
-	path = bundle/taskpaper
-	url = https://github.com/davidoc/taskpaper.vim.git
 [submodule "bundle/rename"]
 	path = bundle/rename
 	url = https://github.com/danro/rename.vim
 [submodule "bundle/javacomplete"]
 	path = bundle/javacomplete
 	url = https://github.com/vim-scripts/javacomplete.git
-[submodule "bundle/splice"]
-	path = bundle/splice
-	url = https://github.com/sjl/splice.vim.git
-[submodule "bundle/quicktask"]
-	path = bundle/quicktask
-	url = https://github.com/aaronbieber/quicktask.git
 [submodule "bundle/vim-cucumber"]
 	path = bundle/vim-cucumber
 	url = git://github.com/tpope/vim-cucumber.git
