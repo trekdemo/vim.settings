@@ -439,23 +439,36 @@ augroup END
     au FileType actionscript setlocal omnifunc=actionscriptcomplete#Complete
     au FileType actionscript setlocal dictionary=$HOME/.vim/dict/actionscript.dict
     au FileType actionscript setlocal autoindent expandtab tabstop=2 shiftwidth=2 softtabstop=2
+    au FileType actionscript setlocal errorformat=
+                                        \%E%f(%l):\ col:\ %c\ Error:\ %m,
+                                        \%W%f(%l):\ col:\ %c\ Warning:\ %m,
+                                        \%E%f:\ Error:\ %m,
+                                        \%W%f:\ Warning:\ %m,
+                                        \%-G%.%#
   augroup END
 " }}}
 " Javascript {{{
-" au!
-  au Filetype javascript setlocal foldmethod=marker foldmarker={,}
+  augroup ft_javascript
+    au!
+    au Filetype javascript setlocal foldmethod=marker foldmarker={,}
+  augroup END
 " }}}
 " Java {{{
-  autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+  augroup ft_java
+    au!
+    autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+  augroup END
 " }}}
 " CoffeeScript {{{
-" au!
-  au Filetype coffee setlocal foldmethod=indent
+  augroup ft_coffee
+    au!
+    au Filetype coffee setlocal foldmethod=indent
+  augroup END
 " }}}
 " HTML {{{
   augroup ft_html
     au!
-    au Filetype html,eruby,erb set ts=2 sts=2 sw=3 noet
+    au Filetype html,eruby,erb set ts=2 sts=2 sw=2 noet
   augroup END
 " }}}
 " TaskPaper {{{
@@ -672,7 +685,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
     " rspec mappings
     function! RunCurrentSpecFile()
       if InSpecFile()
-        let l:command = "s " . @% . " -f documentation"
+        let l:command = "s " . " -f documentation " . @%
         call SetLastSpecCommand(l:command)
         call RunSpecs(l:command)
       endif
@@ -680,7 +693,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 
     function! RunNearestSpec()
       if InSpecFile()
-        let l:command = "s " . @% . " -l " . line(".") . " -f documentation"
+        let l:command = "s " . " -l " . line(".") . " -f documentation " . @%
         call SetLastSpecCommand(l:command)
         call RunSpecs(l:command)
       endif
